@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Cook Book{% endblock %}
+{%block body%}
+
+<div id="welcome">
+    <h2>Welcome to your personal Cook Book</h2>
+    <fieldset>
+        <div class="search-container">
+            <form action="/recipes" method="GET">
+                <p>What would you like to cook today?</p>
+                <input type="text" placeholder="Apple, flour, sugar" aria-label="Ingridients" aria-describedby="button-addon2" name="ingredients" method="POST">
+                <button type="submit" id="submit">Submit</button>
+            </form>
+          </div>
+    </fieldset>
+  </div>
+
+{% endblock %}
