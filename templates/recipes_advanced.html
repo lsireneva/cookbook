@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Search recipes{% endblock %}
+{% block body %}
+
+<h1>Recipes:</h1>
+
+ <!-- Display recipe titles and pictures -->
+ <ol>
+    {% for recipe in recipes['results']%}
+    <li>
+      <div>{{recipe['title']}}</div>
+      <img src="{{recipe['image']}}" width='20%'>
+      <div>{{recipe['usedIngredients']}}</div>
+    </li> 
+  {% endfor %}
+</ol>
+
+{% endblock %}
