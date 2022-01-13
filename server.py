@@ -37,10 +37,41 @@ def get_recipes():
     recipes = response.json()
 
     #print(recipes)
-    #for recipe in recipes:
-    #    print (recipe['title'])
+    # for recipe in recipes:
+    #     print (recipe['title'])
+    #     print(recipe["usedIngredients"])
 
     return render_template('recipes.html', recipes=recipes)
+
+@app.route('/recipes_advanced')
+def get_receipes_advanced():
+    
+    ingredients = request.args.get("ingredients")
+    print("******Input Ingredients:*****", ingredients)
+
+    cuisine = request.args.get("cuisine")
+    print("******Cuisine:*****", cuisine)
+
+    #ingredients = ["chicken", "pasta", "butter"]
+    url = 'https://api.spoonacular.com/recipes/complexSearch'
+    payload = {'ingredients': ingredients, 'cuisine': cuisine, 'number': 10, 'apiKey': API_KEY}
+
+    response = requests.get(url, params=payload)
+
+    if response.status_code != 200:
+                response.raise_for_status()
+    
+    recipes = response.json()
+
+    print(recipes)
+    # for recipe in recipes:
+    #     print (recipe['title'])
+    #     print(recipe["usedIngredients"])
+
+    return render_template('recipes_advanced.html', recipes=recipes)
+
+
+
 
 
 if __name__ == '__main__':

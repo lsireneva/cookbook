@@ -3,17 +3,104 @@
 {% block title %}Cook Book{% endblock %}
 {%block body%}
 
-<div id="welcome">
-    <h2>Welcome to your personal Cook Book</h2>
-    <fieldset>
-        <div class="search-container">
-            <form action="/recipes" method="GET">
-                <p>What would you like to cook today?</p>
-                <input type="text" placeholder="Apple, flour, sugar" aria-label="Ingridients" aria-describedby="button-addon2" name="ingredients" method="POST">
-                <button type="submit" id="submit">Submit</button>
-            </form>
-          </div>
-    </fieldset>
-  </div>
+    <h1>Welcome to your personal Cook Book</h1>
+    <h2>What would you like to cook today?</h2>
+    
+      <section id="search-by-ingredients-container">
+        <form action="/recipes" method="GET">
+          <label for="search_ingredients">Search by ingredients:</label>
+          <input type="text" id ="search_ingredients" placeholder="Apple, flour, sugar" name="ingredients" method="POST">
+          <button type="submit" id="submit">Submit</button>
+        </form>
+      </section>
+      
+      <section id="advanced-search-container">
+        <h3>Advanced search of recipe:</h3><br>
+        <form action="/recipes_advanced" method="GET">
+            <label for="search_ingredients">Ingredients:</label>
+            <input type="text" id ="search_advanced" placeholder="Apple, flour, sugar" name="ingredients" method="POST"><br>
+            <div><br>
+              <label>Choose a meal type:</label>
+              <select name="meal_type" id="meal_type" method="POST">
+                  <option value="none" selected disabled hidden>Select an Option</option>
+                  <option value="main_course">main course</option>
+                  <option value="side_dish">side dish</option>
+                  <option value="dessert">dessert</option>
+                  <option value="appetizer">appetizer</option>
+                  <option value="salad">salad</option>
+                  <option value="bread">bread</option>
+                  <option value="breakfast">breakfast</option>
+                  <option value="soup">soup</option>
+                  <option value="sauce">sauce</option>
+                  <option value="snack">snack</option>
+                  <option value="fingerfood">fingerfood</option>
+                  <option value="drink">drink</option>
+              </select>
+          </div><br>
+            <div>
+              <label>Choose a cuisine:</label>
+              <select name="cuisine" id="cuisine" method="POST">
+                  <option value="none" selected disabled hidden>Select an Option</option>
+                  <option value="european">European</option>
+                  <option value="french">French</option>
+                  <option value="korean">Korean</option>
+                  <option value="american">American</option>
+                  <option value="chinese">Chinese</option>
+                  <option value="british">British</option>
+                  <option value="italian">Italian</option>
+                  <option value="mediterranean">Mediterranean</option>
+                  <option value="mexican">Mexican</option>
+                  <option value="japanese">Japanese</option>
+                  <option value="german">German</option>
+                  <option value="indian">Indian</option>
+              </select>
+          </div><br>
+          <div>
+            <label>Choose a diet</label>
+            <select name="diet" id="diet" method="POST">
+                <option value="none" selected disabled hidden>Select an Option</option>
+                <option value="glute_free">Gluten Free</option>
+                <option value="keto">Ketogenic</option>
+                <option value="vegeterian">Vegetarian</option>
+                <option value="lacto_vegeterian">Lacto-Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="pescetarian">Pescetarian</option>
+                <option value="paleo">Paleo</option>
+                <option value="low_fodmap">Low FODMAP</option>
+                <option value="whole_30">Whole30</option>
+            </select>
+        </div><br>
+        <div>
+        <label>Food Intolerances:</label><br>
+          <input type="checkbox" id="dairy" name="dairy" value="dairy">
+          <label for="dairy"> Dairy</label><br>
+          <input type="checkbox" id="egg" name="egg" value="egg">
+          <label for="egg">Egg</label><br>
+          <input type="checkbox" id="gluten" name="gluten" value="gluten">
+          <label for="gluten">Gluten</label><br>
+          <input type="checkbox" id="grain" name="grain" value="grain">
+          <label for="grain">Grain</label><br>
+          <input type="checkbox" id="peanut" name="peanut" value="peanut">
+          <label for="peanut">Peanut</label><br>
+          <input type="checkbox" id="wheat" name="wheat" value="wheat">
+          <label for="wheat">Wheat</label><br>
+          <input type="checkbox" id="seafood" name="seafood" value="seafood">
+          <label for="seafood">Seafood</label><br>
+          <input type="checkbox" id="sesame" name="sesame" value="sesame">
+          <label for="sesame">Sesame</label><br>
+          <input type="checkbox" id="shellfish" name="shellfish" value="shellfish">
+          <label for="shellfish">Shellfish</label><br>
+          <input type="checkbox" id="soy" name="soy" value="soy">
+          <label for="soy">Soy</label><br>
+          <input type="checkbox" id="sulfite" name="sulfite" value="sulfite">
+          <label for="sulfite">Sulfite</label><br>
+          <input type="checkbox" id="treenut" name="treenut" value="treenut">
+          <label for="treenut">Tree Nut</label><br>
+        </div> <br>
+        
+        <button type="submit" id="submit">Submit</button>
+        </form>
+      </section>
+
 
 {% endblock %}
