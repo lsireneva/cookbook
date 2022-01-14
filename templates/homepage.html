@@ -17,14 +17,16 @@
       <section id="advanced-search-container">
         <h3>Advanced search of recipe:</h3><br>
         <form action="/recipes_advanced" method="GET">
-            <label for="search_ingredients">Ingredients:</label>
-            <input type="text" id ="search_advanced" placeholder="Apple, flour, sugar" name="ingredients" method="POST"><br>
+            <label for="dish">Dish:</label>
+            <input type="text" id ="dish" placeholder="pasta" name="query" method="POST"><br><br>
+            <label for="includeIngredients">Ingredients:</label>
+            <input type="text" id ="includeIngredients" placeholder="tomato, cheese" name="includeIngredients" method="POST"><br>
             <div><br>
               <label>Choose a meal type:</label>
-              <select name="meal_type" id="meal_type" method="POST">
+              <select name="type" id="type" method="POST">
                   <option value="none" selected disabled hidden>Select an Option</option>
-                  <option value="main_course">main course</option>
-                  <option value="side_dish">side dish</option>
+                  <option value="main course">main course</option>
+                  <option value="side dish">side dish</option>
                   <option value="dessert">dessert</option>
                   <option value="appetizer">appetizer</option>
                   <option value="salad">salad</option>
@@ -41,64 +43,65 @@
               <label>Choose a cuisine:</label>
               <select name="cuisine" id="cuisine" method="POST">
                   <option value="none" selected disabled hidden>Select an Option</option>
-                  <option value="european">European</option>
-                  <option value="french">French</option>
-                  <option value="korean">Korean</option>
-                  <option value="american">American</option>
-                  <option value="chinese">Chinese</option>
-                  <option value="british">British</option>
-                  <option value="italian">Italian</option>
-                  <option value="mediterranean">Mediterranean</option>
-                  <option value="mexican">Mexican</option>
-                  <option value="japanese">Japanese</option>
-                  <option value="german">German</option>
-                  <option value="indian">Indian</option>
+                  <option value="European">European</option>
+                  <option value="French">French</option>
+                  <option value="Korean">Korean</option>
+                  <option value="American">American</option>
+                  <option value="Chinese">Chinese</option>
+                  <option value="British">British</option>
+                  <option value="Italian">Italian</option>
+                  <option value="Mediterranean">Mediterranean</option>
+                  <option value="Mexican">Mexican</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="German">German</option>
+                  <option value="Indian">Indian</option>
               </select>
           </div><br>
           <div>
             <label>Choose a diet</label>
             <select name="diet" id="diet" method="POST">
                 <option value="none" selected disabled hidden>Select an Option</option>
-                <option value="glute_free">Gluten Free</option>
-                <option value="keto">Ketogenic</option>
-                <option value="vegeterian">Vegetarian</option>
-                <option value="lacto_vegeterian">Lacto-Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="pescetarian">Pescetarian</option>
-                <option value="paleo">Paleo</option>
-                <option value="low_fodmap">Low FODMAP</option>
-                <option value="whole_30">Whole30</option>
+                <option value="Glute Free">Gluten Free</option>
+                <option value="Keto">Ketogenic</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Pescetarian">Pescetarian</option>
+                <option value="Paleo">Paleo</option>
+                <option value="Low FODMAP">Low FODMAP</option>
+                <option value="Whole30">Whole30</option>
             </select>
         </div><br>
+        
         <div>
         <label>Food Intolerances:</label><br>
-          <input type="checkbox" id="dairy" name="dairy" value="dairy">
+          <input type="checkbox" id="dairy" name="intolerances" value="dairy">
           <label for="dairy"> Dairy</label><br>
-          <input type="checkbox" id="egg" name="egg" value="egg">
+          <input type="checkbox" id="egg" name="intolerances" value="egg">
           <label for="egg">Egg</label><br>
-          <input type="checkbox" id="gluten" name="gluten" value="gluten">
+          <input type="checkbox" id="gluten" name="intolerances" value="gluten">
           <label for="gluten">Gluten</label><br>
-          <input type="checkbox" id="grain" name="grain" value="grain">
+          <input type="checkbox" id="grain" name="intolerances" value="grain">
           <label for="grain">Grain</label><br>
-          <input type="checkbox" id="peanut" name="peanut" value="peanut">
+          <input type="checkbox" id="peanut" name="intolerances" value="peanut">
           <label for="peanut">Peanut</label><br>
-          <input type="checkbox" id="wheat" name="wheat" value="wheat">
+          <input type="checkbox" id="wheat" name="intolerances" value="wheat">
           <label for="wheat">Wheat</label><br>
-          <input type="checkbox" id="seafood" name="seafood" value="seafood">
+          <input type="checkbox" id="seafood" name="intolerances" value="seafood">
           <label for="seafood">Seafood</label><br>
-          <input type="checkbox" id="sesame" name="sesame" value="sesame">
+          <input type="checkbox" id="sesame" name="intolerances" value="sesame">
           <label for="sesame">Sesame</label><br>
-          <input type="checkbox" id="shellfish" name="shellfish" value="shellfish">
+          <input type="checkbox" id="shellfish" name="intolerances" value="shellfish">
           <label for="shellfish">Shellfish</label><br>
-          <input type="checkbox" id="soy" name="soy" value="soy">
+          <input type="checkbox" id="soy" name="intolerances" value="soy">
           <label for="soy">Soy</label><br>
-          <input type="checkbox" id="sulfite" name="sulfite" value="sulfite">
+          <input type="checkbox" id="sulfite" name="intolerances" value="sulfite">
           <label for="sulfite">Sulfite</label><br>
-          <input type="checkbox" id="treenut" name="treenut" value="treenut">
+          <input type="checkbox" id="treenut" name="intolerances" value="treenut">
           <label for="treenut">Tree Nut</label><br>
         </div> <br>
         
-        <button type="submit" id="submit">Submit</button>
+        <button type="submit" id="submit">Search</button>
         </form>
       </section>
 

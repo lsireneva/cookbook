@@ -25,7 +25,6 @@ def get_recipes():
     ingredients = request.args.get("ingredients")
     print("******Input Ingredients:*****", ingredients)
 
-    #ingredients = ["chicken", "pasta", "butter"]
     url = 'https://api.spoonacular.com/recipes/findByIngredients'
     payload = {'ingredients': ingredients, 'number': 10, 'apiKey': API_KEY}
 
@@ -46,17 +45,38 @@ def get_recipes():
 @app.route('/recipes_advanced')
 def get_receipes_advanced():
     
-    ingredients = request.args.get("ingredients")
-    print("******Input Ingredients:*****", ingredients)
+    query = request.args.get("query")
+    print("******Input Dish:*****", query)
+
+    includeIngredients = request.args.get("includeIngredients")
+    print("******Input Ingredients:*****", includeIngredients)
 
     cuisine = request.args.get("cuisine")
     print("******Cuisine:*****", cuisine)
 
-    #ingredients = ["chicken", "pasta", "butter"]
+    diet = request.args.get("diet")
+    print("******Diet:*****", diet)
+
+    meal_type = request.args.get("type")
+    print("******Meal type:*****", meal_type)
+
+    values = request.args.getlist('intolerances') 
+    
+    intolerances =",".join(values)
+    print ("******Intolerances:*****", intolerances)
+
     url = 'https://api.spoonacular.com/recipes/complexSearch'
-    payload = {'ingredients': ingredients, 'cuisine': cuisine, 'number': 10, 'apiKey': API_KEY}
+    payload = {'query': query,
+                'cuisine': cuisine,
+                'diet': diet,  
+                'intolerances': intolerances,
+                'includeIngredients': includeIngredients,
+                'type': meal_type,
+                'number': 10, 
+                'apiKey': API_KEY}
 
     response = requests.get(url, params=payload)
+    print ("response:", response)
 
     if response.status_code != 200:
                 response.raise_for_status()
