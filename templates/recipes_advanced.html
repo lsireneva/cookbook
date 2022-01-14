@@ -4,15 +4,20 @@
 
 <h1>Recipes:</h1>
 
- <!-- Display recipe titles and pictures -->
- <ol>
+ <!-- Display list of found recipes (titles and pictures) -->
+
+ <div class="grid-container">
     {% for recipe in recipes['results']%}
-    <li>
-      <div>{{recipe['title']}}</div>
-      <img src="{{recipe['image']}}" width='20%'>
-      <div>{{recipe['usedIngredients']}}</div>
-    </li> 
-  {% endfor %}
-</ol>
+    <grid_item>
+    <figure class= "recipy_item">
+      <h2>{{recipe['title']}}</h2><br>
+        <a href="/recipe_details/{{ recipe['id']}}">
+          <img src="{{recipe['image']}}" class="recipe_img">
+        </a>
+      <h3>Time:{{ recipe['readyInMinutes']}} min  Likes:{{ recipe['aggregateLikes']}}</h3>
+    </figure>
+  </grid_item>
+    {%endfor%}
+</div>
 
 {% endblock %}

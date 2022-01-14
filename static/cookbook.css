@@ -14,9 +14,49 @@ h2 {
   section {
     padding: 50px;  
     margin: 100px;
-
-    background-color: #33475b;
     border-radius: 10px;
     color: white;
     font-family: Avenir;
+    background-color: #33475b;
   }
+
+
+  .grid-container {
+    display: grid;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .recipe_img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+
+.link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}

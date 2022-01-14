@@ -43,7 +43,7 @@ def get_recipes():
     return render_template('recipes.html', recipes=recipes)
 
 @app.route('/recipes_advanced')
-def get_receipes_advanced():
+def get_recipes_advanced():
     
     query = request.args.get("query")
     print("******Input Dish:*****", query)
@@ -72,7 +72,8 @@ def get_receipes_advanced():
                 'intolerances': intolerances,
                 'includeIngredients': includeIngredients,
                 'type': meal_type,
-                'number': 10, 
+                'addRecipeInformation': True,
+                'number': 1, 
                 'apiKey': API_KEY}
 
     response = requests.get(url, params=payload)
@@ -91,6 +92,27 @@ def get_receipes_advanced():
     return render_template('recipes_advanced.html', recipes=recipes)
 
 
+@app.route('/recipe_details/<recipe_id>')
+def get_recipe_details(recipe_id):
+    
+    print("******recipe_id=",recipe_id)
+
+    url = f'https://api.spoonacular.com/recipes/{recipe_id}/information'
+    payload = {'includeNutrition': True, 'apiKey': API_KEY}
+
+    response = requests.get(url, params=payload)
+    print ("response:", response)
+
+    if response.status_code != 200:
+        response.raise_for_status()
+    
+    recipe_details = response.json()
+
+    summary = recipe_details['summary'].replace("</b>", "").replace("<b>", "")
+    test = summary.split('.')
+    print("Summary", summary)
+    print("Test", test)
+    return render_template('recipe_details.html', recipe=recipe_details, summary=summary)
 
 
 
