@@ -19,6 +19,13 @@ def check_login (email, password):
 
     return user
 
+def get_user_fname(user_id):
+
+    user = model.User.query.filter(model.User.user_id==user_id).one()
+    
+    return user.fname
+
+
 if __name__ == "__main__":
     from server import app
     model.connect_to_db(app)

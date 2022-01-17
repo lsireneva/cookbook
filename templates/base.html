@@ -6,13 +6,25 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
   integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/static/cookbook.css">
+  <link rel="stylesheet" href="/static/css/cookbook.css">
 </head>
 <div class="topnav">
-  <a class="topnavtext" href="/">Home</a>
-  <a class="topnavtext" href="/signup">Sign Up</a>
-  <a class="topnavtext" href="/login">Login</a>
+  {% if session["user_id"] %}
+    <a class="topnavtext" href="/">Home</a>
+    <a class="topnavtext" href="/">Favorites</a>
+    <a class="topnavtext" href="/">Add a recipe</a>
+    <a class="topnavtext" href="/logout" style="visibility:visible;">Log out</a>
+  {% else %}
+    <a class="topnavtext" href="/">Home</a>
+    <a class="topnavtext" href="/signup">Sign Up</a>
+    <a class="topnavtext" href="/login" style="visibility:visible;">Login</a>
+  {% endif %}  
 </div>
+{% for msg in get_flashed_messages() %}
+  <p class="flash-msg">
+    {{ msg }}
+  </p>
+  {% endfor %}
 <body>
   {% block body %}{% endblock %}
 </body>

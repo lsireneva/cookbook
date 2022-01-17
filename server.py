@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, flash, redirect, session
+from flask import Flask, render_template, request, flash, redirect, session, url_for
 import spoonacular as sp
 import os
 import json
@@ -21,8 +21,12 @@ model.connect_to_db(app)
 @app.route('/')
 def homepage():
     """Show homepage."""
-
-    return render_template('homepage.html')
+    if session.get('user_id') != None:
+        user_id = session['user_id']
+        fname = crud.get_user_fname(user_id)   
+        return render_template('homepage.html', fname=fname)
+    else:
+        return render_template('homepage.html')
 
 @app.route('/signup')
 def signup():
@@ -42,9 +46,9 @@ def create_user():
     password = request.form.get('password')
 
     if crud.add_new_user(fname,lname,email,password):
-        print('New user account created', 'message')
+        flash('New user account created', 'message')
     else:
-        print('User creation failed', 'error')
+        flash('User creation failed', 'error')
     return redirect('/')
 
 
@@ -53,6 +57,15 @@ def login():
     """User login page"""
 
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    """User log out"""
+    if session.get("user_id"):
+        session.clear()
+        flash("User logged out.")
+    
+    return redirect("/")
 
 @app.route('/check_login', methods=['POST'])
 def check_login():
@@ -68,7 +81,8 @@ def check_login():
     
     if user:
         session['user_id'] = user.user_id
-        return redirect('/')
+        flash('You were successfully logged in')
+        return redirect(url_for('.homepage', user_id = user.user_id))
     else:
         print('ERORR', 'User login failed')
         return redirect('/login')

@@ -2,8 +2,11 @@
 
 {% block title %}Cook Book{% endblock %}
 {%block body%}
-
-    <h1>Welcome to your personal Cook Book</h1>
+    {% if fname%}
+      <h1>{{fname}}, welcome to your personal CookBook</h1>
+    {% else %}
+      <h1>Welcome to your personal CookBook</h1>
+    {% endif %}
     <h2>What would you like to cook today?</h2>
     
       <section id="search-by-ingredients-container">
