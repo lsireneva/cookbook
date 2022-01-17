@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Login in to CookBook:</h1>
+<center>
+<section>
+    <form class="signup-login-user-form" action="/check_login" method="POST">
+        <a href="/signup" style="color:white">Don't have an account? Sign up free!</a><br><br>
+        <label for="email">Email:</label>
+        <input id= "email" type="text" name="email" placeholder="Enter your email address"><br><br>
+
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" placeholder="Enter password"><br><br>
+        <button type="submit" id="submit">Login</button>
+    </form>
+</section>
+</center>
+{% endblock %}

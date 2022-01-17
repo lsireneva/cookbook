@@ -6,14 +6,16 @@ from server import app
 os.system("dropdb cookbook")
 os.system("createdb cookbook")
 
+
 connect_to_db(app)
+db.drop_all()
 db.create_all()
     
 
-user = User(user_id=1, fname="Luba", lname="Developer", email="luba@test.test", password="123")
-recipe = Recipe(recipe_id=1, recipe_name="Macaroni and cheese", recipe_directions="Cook macaroni according to the package directions. Drain.", recipe_image="some link", note="Sprinkle with a little paprika.")
+user1 = User(fname="Luba", lname="Developer", email="luba@test.com", password="123")
+recipe1 = Recipe(recipe_name="Macaroni and cheese", recipe_directions="Cook macaroni according to the package directions. Drain.", recipe_image="some link", note="Sprinkle with a little paprika.")
 
-db.session.add(user)
-db.session.add(recipe)
+db.session.add(user1)
+db.session.add(recipe1)
 
 db.session.commit()

@@ -1,15 +1,18 @@
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, session
 import spoonacular as sp
 import os
 import json
 from pprint import pformat
 import requests
+import model
+import crud
 
 
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
 API_KEY = os.environ['SPOONACULAR_KEY']
+model.connect_to_db(app)
 
 # Load movie data from JSON file
 #with open("data/recipe_information.json") as f:
@@ -20,6 +23,55 @@ def homepage():
     """Show homepage."""
 
     return render_template('homepage.html')
+
+@app.route('/signup')
+def signup():
+
+    """Registration form for new users"""
+
+    return render_template('signup.html')
+
+
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    """Create user account"""
+
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    if crud.add_new_user(fname,lname,email,password):
+        print('New user account created', 'message')
+    else:
+        print('User creation failed', 'error')
+    return redirect('/')
+
+
+@app.route('/login')
+def login():
+    """User login page"""
+
+    return render_template('login.html')
+
+@app.route('/check_login', methods=['POST'])
+def check_login():
+
+    email = request.form.get('email')
+    password = request.form.get('password')
+    print ("email", email)
+    print("password", password)
+
+    user = crud.check_login(email, password)
+    print ("USER:", user)
+    
+    
+    if user:
+        session['user_id'] = user.user_id
+        return redirect('/')
+    else:
+        print('ERORR', 'User login failed')
+        return redirect('/login')
 
 
 @app.route('/recipes')

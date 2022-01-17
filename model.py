@@ -10,7 +10,7 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     fname = db.Column(db.String(25), nullable=False)
     lname = db.Column(db.String(25), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)

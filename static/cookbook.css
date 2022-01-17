@@ -32,6 +32,7 @@ h2 {
     color: white;
     font-family: Avenir;
     background-color: #33475b;
+    width: fit-content;
   }
 
 
@@ -98,4 +99,6 @@ h2 {
   display: inline;
 }
 
-
+.signup-login-user-form input{
+  display:flex;
+}
