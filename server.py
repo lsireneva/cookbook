@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, flash, redirect, session, url_for
+from flask import Flask, render_template, request, flash, redirect, session, url_for, jsonify
 import spoonacular as sp
 import os
 import json
@@ -179,6 +179,7 @@ def get_recipe_details(recipe_id):
         response.raise_for_status()
     
     recipe_info = response.json()
+    print (recipe_info)
 
     # summary = recipe_details['summary'].replace("</b>", "").replace("<b>", "")
     # test = summary.split('.')
@@ -229,13 +230,20 @@ def get_recipe_details(recipe_id):
 
     summary = recipe_info['summary'].replace("</b>", "").replace("<b>", "")
     test = summary.split('.')
-    # print("Summary", summary)
+    
+    return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=ingredients_list, summary=summary, instructions_list=instructions_list, recipe_id=recipe_id)
 
-    # for i in test:
-    #     print("i", i)
 
-    #return render_template('recipe_details.html', recipe=recipe_details, summary=summary)
-    return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=ingredients_list, summary=summary, instructions_list=instructions_list)
+@app.route('/save_recipe_to_db', methods=['GET', 'POST'])
+def save_recipe_to_db(): 
+    recipe_info = request.get_json().get("recipe_info")
+    print (recipe_info)
+    crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
+
+    print("USER_ID", session.get("user_id"))
+    crud.add_new_favorite(session.get("user_id"), "" , "main course")
+    return jsonify({"status":"recipe saved to db"})
+
 
 
 if __name__ == '__main__':

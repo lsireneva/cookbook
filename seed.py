@@ -13,7 +13,7 @@ db.create_all()
     
 
 user1 = User(fname="Luba", lname="Developer", email="luba@test.com", password="123")
-recipe1 = Recipe(recipe_name="Macaroni and cheese", recipe_directions="Cook macaroni according to the package directions. Drain.", recipe_image="some link", note="Sprinkle with a little paprika.")
+recipe1 = Recipe(recipe_name="Chicken Stew", recipe_instructions="Slice the onions.", recipe_image="link", time="45 min", servings="6", calories="330", fat="20 g", protein="17 g", carbs="15 g", note="add garlic")
 
 db.session.add(user1)
 db.session.add(recipe1)

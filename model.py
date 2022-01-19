@@ -31,8 +31,14 @@ class Recipe(db.Model):
 
     recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     recipe_name = db.Column(db.String(100), nullable=False)
-    recipe_directions = db.Column(db.String, nullable=False)
+    recipe_instructions = db.Column(db.String, nullable=False)
     recipe_image = db.Column(db.String(100))
+    time = db.Column(db.String(25))
+    servings = db.Column(db.String(25))
+    calories = db.Column(db.String(25))
+    fat = db.Column(db.String(25))
+    protein = db.Column(db.String(25))
+    carbs = db.Column(db.String(25))
     note = db.Column(db.String(300))
 
     favorites = db.relationship('Favorite', backref='recipe')
