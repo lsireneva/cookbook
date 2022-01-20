@@ -149,7 +149,7 @@ def get_recipes_advanced():
                 'apiKey': API_KEY}
 
     response = requests.get(url, params=payload)
-    print ("response:", response)
+    #print ("response:", response)
 
     if response.status_code != 200:
                 response.raise_for_status()
@@ -259,7 +259,24 @@ def save_recipe_to_db():
     
     return jsonify({"status":"recipe saved to db"})
 
+@app.route('/favorites', methods=['GET', 'POST'])
+def open_favorites():
+    
+    favorites = crud.get_all_favorites(session.get("user_id"))
+    print("+++++++FAVORITES", favorites)
 
+    for fav in favorites:
+        print("+++++++FAV", fav)
+        print(fav.recipe_name)
+
+    return render_template('favorites.html', favorites=favorites)
+
+@app.route('/recipe_details_db/<recipe_id>', methods=['POST'])
+def get_recipe_details_db(recipe_id):
+
+
+    #return render_template('recipe_details.html')
+    return f"recipe details for {recipe_id}"
 
 if __name__ == '__main__':
     app.debug = True

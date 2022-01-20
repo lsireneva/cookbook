@@ -1,1 +1,23 @@
 {% extends 'base.html' %}
+{% block title %}Search recipes{% endblock %}
+{% block body %}
+
+<h1>Favorite recipes:</h1>
+
+ <!-- Display list of found recipes (titles and pictures) -->
+
+ <div class="grid-container">
+    {% for fav in favorites%}
+    <grid_item>
+    <figure class= "recipy_item">
+        <h2>{{fav.recipe_name}}</h2><br>
+        <a href="/recipe_details_db/{{fav.id}}">
+            <img src="{{fav.recipe_image}}" class="recipe_img">
+        </a>
+        <h3>Time:{{fav.time}}</h3>
+    </figure>
+  </grid_item>
+    {%endfor%}
+</div>
+
+{% endblock %}

@@ -46,7 +46,7 @@ class Recipe(db.Model):
 
     # recipe object
     def __repr__(self):
-        return f"<Recipe recipe_id={self.recipe_id} recipe_name={self.recipe_name}>"
+        return f"<Recipe recipe_id={self.recipe_id} recipe_name={self.recipe_name} recipe_image={self.recipe_image} time={self.time}>"
 
 
 class Ingredient(db.Model):
