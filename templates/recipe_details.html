@@ -1,22 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}Recipe details{% endblock %}
 {% block body %}
-
+    <p id="recipe_id" hidden>{{recipe_id}}</p>
     <h2 id="recipe_title">{{recipe['title']}}</h2><br>
-    <center><button type="submit" id="add_favorites">Add to Favorites</button> </center>
+    {% if session["user_id"] %}
+        <center><button type="submit" id="add_favorites">Add to Favorites</button> </center>
+    {% else %}
+        <center><button type="submit" id="add_favorites" hidden>Add to Favorites</button> </center>
+    {% endif %}  
     <img id ="recipe_image" src="{{recipe['image']}}" width="20%" class="center"><br>
 
     <center>
-    <h2 id="time" style="display:inline;">Time:{{recipe['readyInMinutes']}}min</h2> <h2 id="servings" style="display:inline;">Servings:{{recipe['servings']}}</h2> <h2 id="calories" style="display:inline;">Calories:{{calories}}</h2>
-    <h2 id="fat" style="display:inline;">Fat:{{fat}}</h2>  <h2 id="protein" style="display:inline;">Protein:{{protein}}</h2> <h2 id="carbs" style="display:inline;">Net Carbs:{{carbs}}</h2>
-    </center>
-
-    <ul id="ingredients">
-        <h3>Ingredients:</h3>
-        {%for ingredient in ingredients_list%}
-        <li>{{ingredient}}</li>
-        {%endfor%}
-    </ul>
+        <label class="recipe-label" for="time">Time:</label><h2 id="time" style="display:inline;">{{recipe['readyInMinutes']}}min</h2>
+        <label class="recipe-label" for="servings">Servings:</label><h2 id="servings" style="display:inline;">{{recipe['servings']}}</h2> 
+        <label class="recipe-label" for="calories">Calories:</label><h2 id="calories" style="display:inline;">{{calories}}</h2>
+        <label class="recipe-label" for="fat">Fat:</label><h2 id="fat" style="display:inline;">{{fat}}</h2>
+        <label class="recipe-label" for="protein">Protein:</label><h2 id="protein" style="display:inline;">{{protein}}</h2>
+        <label class="recipe-label" for="carbs">Net Carbs:</label><h2 id="carbs" style="display:inline;">{{carbs}}</h2>
+    </center><br>
+    <center>
+    <div>
+    {%for type in dish_type%}
+       <p id="dish_type" style="display:inline;">{{type}}</p>
+    {%endfor%}
+    </div>
+    </center><br><br>
+    <h2>Ingredients:</h2>
+    <div id="ingredients" class="grid-container">    
+            {%for ingredient in ingredients_list%}
+            <grid_item id="item" style="border:solid">
+                <img id="ingredient_image" src="https://spoonacular.com/cdn/ingredients_100x100/{{ingredient['image']}}">
+                <div id="amount" class="ingredient-div">{{ingredient["amount"]}}</div>&nbsp<div id="unit" class="ingredient-div">{{ingredient["unit"]}}</div>&nbsp<div id="name" class="ingredient-div">{{ingredient["name"]}}</div> 
+            </grid_item>
+            {%endfor%}    
+    </div>
 
     <ol id="instructions">
         <h3>Instructions:</h3>

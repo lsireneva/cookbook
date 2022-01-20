@@ -30,7 +30,7 @@ class Recipe(db.Model):
     __tablename__= "recipes"
 
     recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    recipe_name = db.Column(db.String(100), nullable=False)
+    recipe_name = db.Column(db.String(100), unique=True, nullable=False)
     recipe_instructions = db.Column(db.String, nullable=False)
     recipe_image = db.Column(db.String(100))
     time = db.Column(db.String(25))
@@ -56,8 +56,8 @@ class Ingredient(db.Model):
     __tablename__="ingredients"
 
     ingredient_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    image = db.Column(db.String(100), nullable=False)
+    ingredient_name = db.Column(db.String(50), unique=True, nullable=False)
+    ingredient_image = db.Column(db.String(100), nullable=False)
 
     ingredients_to_recipes = db.relationship('IngredientToRecipe', backref='ingredient')
 
@@ -69,12 +69,12 @@ class Ingredient(db.Model):
 class IngredientToRecipe(db.Model):
     """Ingredients list for recipe"""
 
-    __tablename__="ingedients_to_recipes"
+    __tablename__="ingredients_to_recipes"
 
     ingredients_to_recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), nullable=False)
     ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredients.ingredient_id"), nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Float, nullable=False)
     measure = db.Column(db.String(25), nullable=False)
 
     # ingredients_to_recipes (db.relationship('IngredientToRecipe', backref='ingredient') on Ingredient model)

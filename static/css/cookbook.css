@@ -25,7 +25,7 @@ h2 {
     font-family: Avenir;
   }
 
-  section, ul, ol,  p {
+  section, ul, ol{
     padding: 50px;  
     margin: 25px;
     border-radius: 10px;
@@ -35,7 +35,26 @@ h2 {
     width: fit-content;
   }
 
+  p{
+    padding: 10px;  
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+    font-family: Avenir;
+    background-color: #33475b;
+    width: fit-content;
+    font-size: 18px;
 
+  }
+
+  .recipe-label{
+    color: #33475b;
+    font-family: Avenir;
+    width: fit-content;
+    font-size: 18px;
+
+  }
+ 
   .grid-container {
     display: grid;
     grid-column-gap: 50px;
@@ -102,3 +121,10 @@ h2 {
 .signup-login-user-form input{
   display:flex;
 }
+
+.ingredient-div{
+  color:#33475b;
+  display:inline;
+}
+
+

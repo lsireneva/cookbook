@@ -14,19 +14,21 @@ app.secret_key = 'SECRETSECRETSECRET'
 API_KEY = os.environ['SPOONACULAR_KEY']
 model.connect_to_db(app)
 
-# Load movie data from JSON file
+# Load recipe data from JSON file
 #with open("data/recipe_information.json") as f:
 #    recipe_info = json.loads(f.read())
 
 @app.route('/')
 def homepage():
     """Show homepage."""
-    if session.get('user_id') != None:
+    print("GET SESSION:",session.get('user_id'))
+    if session.get('user_id') == None:
+        return render_template('homepage.html')
+    else:
         user_id = session['user_id']
         fname = crud.get_user_fname(user_id)   
         return render_template('homepage.html', fname=fname)
-    else:
-        return render_template('homepage.html')
+        
 
 @app.route('/signup')
 def signup():
@@ -179,14 +181,9 @@ def get_recipe_details(recipe_id):
         response.raise_for_status()
     
     recipe_info = response.json()
-    print (recipe_info)
+    #print (recipe_info)
 
-    # summary = recipe_details['summary'].replace("</b>", "").replace("<b>", "")
-    # test = summary.split('.')
-    # print("Summary", summary)
-    # print("Test", test)
     print ("+++++Title", recipe_info["title"])
-    #print (recipe_info['nutrition'])
 
     for item in recipe_info['nutrition']['nutrients']:
         name, amount, unit = (
@@ -212,36 +209,54 @@ def get_recipe_details(recipe_id):
             carbs = str(amount)+" "+unit
             print (carbs)
     
-    ingredients_list=[]
+    # get ingredients
+    # ingredients_list=[]
 
-    for ingredient in recipe_info['nutrition']['ingredients']:
-        #print(ingredient['name'], ingredient['amount'], ingredient['unit'])
-        item=str(ingredient['amount']) + " " + ingredient['unit']+ " " + ingredient['name']      
-        ingredients_list.append(item)
+    # for ingredient in recipe_info['nutrition']['ingredients']:
+    #     #print(ingredient['name'], ingredient['amount'], ingredient['unit'])
+    #     item=str(ingredient['amount']) + " " + ingredient['unit']+ " " + ingredient['name']      
+    #     ingredients_list.append(item)
     
     #print("ingredients_list:", ingredients_list)
-
-    instructions_list=[]
     
+    #get instructions
+    instructions_list=[]
     for step in recipe_info['analyzedInstructions'][0]['steps']:
         #print(ingredient['name'], ingredient['amount'], ingredient['unit'])
         instructions_list.append(step['step'])
     
-
-    summary = recipe_info['summary'].replace("</b>", "").replace("<b>", "")
-    test = summary.split('.')
+    # for ingredient in recipe_info["extendedIngredients"]:
+    #     print(ingredient["name"])
+    #     print(ingredient["amount"])
+    #     print(ingredient["unit"])
+    #     print(ingredient["image"])
     
-    return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=ingredients_list, summary=summary, instructions_list=instructions_list, recipe_id=recipe_id)
+    return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=recipe_info["extendedIngredients"], instructions_list=instructions_list, recipe_id=recipe_id, dish_type=recipe_info["dishTypes"])
 
 
 @app.route('/save_recipe_to_db', methods=['GET', 'POST'])
 def save_recipe_to_db(): 
     recipe_info = request.get_json().get("recipe_info")
     print (recipe_info)
+    #save to recipes table
     crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
-
-    print("USER_ID", session.get("user_id"))
-    crud.add_new_favorite(session.get("user_id"), "" , "main course")
+    #save to favorites table
+    if session.get("user_id"):
+        print("USER_ID", session.get("user_id"))
+        crud.add_new_favorite(session.get("user_id"), crud.get_recipe_id(recipe_info["title"]), recipe_info["dish_type"])
+    
+    #save to ingredients table and to IngredientToRecipe table
+    for ingredient in recipe_info["ingredients"]:
+        print(ingredient["name"])
+        print(ingredient["image"])
+        crud.add_new_ingredient(ingredient["name"], ingredient["image"])
+    
+    for ingredient in recipe_info["ingredients"]:
+        print(ingredient["amount"])
+        print(ingredient["unit"])
+        print(crud.get_ingredient_id(ingredient["name"]))
+        crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
+    
     return jsonify({"status":"recipe saved to db"})
 
 

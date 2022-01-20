@@ -22,27 +22,38 @@ def add_new_favorite(user_id, recipe_id, category):
     add_to_db(favorite)
     return True
 
-def check_login (email, password):
+def add_new_ingredient(name, image):
+    ingredient = model.Ingredient (ingredient_name=name, ingredient_image=image)
+    add_to_db(ingredient)
+    return True
 
+def add_ingredient_to_recipe(recipe_id, ingredient_id, quantity, measure):
+    ingredient_to_recipe = model.IngredientToRecipe(recipe_id=recipe_id, ingredient_id=ingredient_id, quantity=quantity, measure=measure)
+    add_to_db(ingredient_to_recipe)
+    return True
+
+def check_login(email, password):
     user = model.User.query.filter(model.User.email == email).one()
     print ("CRUD USER", user)
     
     if user.email != email or user.password != password:
         return False
-
     return user
 
 def get_user_fname(user_id):
-
     user = model.User.query.filter(model.User.user_id==user_id).one()
     
     return user.fname
 
+def get_recipe_id(name):
+    recipe = model.Recipe.query.filter(model.Recipe.recipe_name==name).one()
 
-def save_favorites(name, instructions, image, note):
+    return recipe.recipe_id
 
-    return True
-
+def get_ingredient_id(name):
+    ingredient = model.Ingredient.query.filter(model.Ingredient.ingredient_name==name).one()
+    print ("CRUD GET INGREDIENT ID", ingredient.ingredient_id)
+    return ingredient.ingredient_id
 
 if __name__ == "__main__":
     from server import app
