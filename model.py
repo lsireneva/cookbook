@@ -92,7 +92,7 @@ class Favorite(db.Model):
 
     favorite_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), unique=True, nullable=False)
     category = db.Column(db.String(50), nullable=False)
 
     # user (db.relationship('Favorite', backref='user') on User model)

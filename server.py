@@ -237,9 +237,13 @@ def get_recipe_details(recipe_id):
 @app.route('/save_recipe_to_db', methods=['GET', 'POST'])
 def save_recipe_to_db(): 
     recipe_info = request.get_json().get("recipe_info")
-    print (recipe_info)
+    #print (recipe_info)
     #save to recipes table
-    crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
+    if not crud.check_record_exist("Recipe", recipe_info["title"]):
+        crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
+    else:
+        return jsonify({"status": "You have already added this recipe to favorites"})
+
     #save to favorites table
     if session.get("user_id"):
         print("USER_ID", session.get("user_id"))
@@ -249,15 +253,19 @@ def save_recipe_to_db():
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["name"])
         print(ingredient["image"])
-        crud.add_new_ingredient(ingredient["name"], ingredient["image"])
+        if not crud.check_record_exist("Ingredient", ingredient["name"]):
+            crud.add_new_ingredient(ingredient["name"], ingredient["image"])
     
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["amount"])
         print(ingredient["unit"])
         print(crud.get_ingredient_id(ingredient["name"]))
-        crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
+        
+        if crud.get_recipe_id(recipe_info["title"]) is not None:
+            crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
     
-    return jsonify({"status":"recipe saved to db"})
+    
+    return jsonify({"status": "Recipe saved to favorites"})
 
 @app.route('/favorites', methods=['GET', 'POST'])
 def open_favorites():

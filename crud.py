@@ -40,14 +40,33 @@ def check_login(email, password):
         return False
     return user
 
+
+def check_record_exist(table, name):
+    print("CRUD table:", table)
+    print("CRUD name:", name)
+    if table=="Recipe":
+        record = Recipe.query.filter(Recipe.recipe_name == name).first()
+        if record is not None:
+            print ("CRUD Recipe already exist")
+            return True
+    elif table=="Ingredient":
+        record = Ingredient.query.filter(Ingredient.ingredient_name == name).first()
+        if record is not None:
+            print ("CRUD Ingredient alredy exist")
+            return True
+    else:
+        return False
+
+
 def get_user_fname(user_id):
     user = User.query.filter(User.user_id==user_id).one()
     
     return user.fname
 
 def get_recipe_id(name):
-    recipe = Recipe.query.filter(Recipe.recipe_name==name).one()
+    recipe = Recipe.query.filter(Recipe.recipe_name==name).first()
 
+    print("CRUD recipe_id=", recipe.recipe_id)
     return recipe.recipe_id
 
 def get_ingredient_id(name):
