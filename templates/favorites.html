@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Search recipes{% endblock %}
+{% block title %}Favorites recipes{% endblock %}
 {% block body %}
 
 <h1>Favorite recipes:</h1>
@@ -11,7 +11,7 @@
     <grid_item>
     <figure class= "recipy_item">
         <h2>{{fav.recipe_name}}</h2><br>
-        <a href="/recipe_details_db/{{fav.id}}">
+        <a href="/recipe_details_db/{{fav.recipe_id}}">
             <img src="{{fav.recipe_image}}" class="recipe_img">
         </a>
         <h3>Time:{{fav.time}}</h3>

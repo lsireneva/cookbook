@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Import recipe{% endblock %}
+{% block body %}
+<h1>Import recipe from the link:</h1>
+<center>
+<form action="/imported_recipe" method="POST">
+    <label for="recipe_link">Link with recipe:</label>
+    <input type="text" id ="recipe_link" name="recipe_link">
+    <button type="submit" id="submit">Submit</button>
+</form>
+</center>
+
+{% endblock %}

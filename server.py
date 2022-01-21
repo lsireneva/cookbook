@@ -181,7 +181,6 @@ def get_recipe_details(recipe_id):
         response.raise_for_status()
     
     recipe_info = response.json()
-    #print (recipe_info)
 
     print ("+++++Title", recipe_info["title"])
 
@@ -190,9 +189,7 @@ def get_recipe_details(recipe_id):
             item["title"], 
             item["amount"], 
             item["unit"],)
-        #print ("+++++name",name)
-        #print ("+++++amount",amount)
-        #print ("+++++unit", unit)
+       
         if name=="Calories":
             cal_amount = amount
             print (cal_amount)
@@ -222,14 +219,7 @@ def get_recipe_details(recipe_id):
     #get instructions
     instructions_list=[]
     for step in recipe_info['analyzedInstructions'][0]['steps']:
-        #print(ingredient['name'], ingredient['amount'], ingredient['unit'])
         instructions_list.append(step['step'])
-    
-    # for ingredient in recipe_info["extendedIngredients"]:
-    #     print(ingredient["name"])
-    #     print(ingredient["amount"])
-    #     print(ingredient["unit"])
-    #     print(ingredient["image"])
     
     return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=recipe_info["extendedIngredients"], instructions_list=instructions_list, recipe_id=recipe_id, dish_type=recipe_info["dishTypes"])
 
@@ -237,7 +227,7 @@ def get_recipe_details(recipe_id):
 @app.route('/save_recipe_to_db', methods=['GET', 'POST'])
 def save_recipe_to_db(): 
     recipe_info = request.get_json().get("recipe_info")
-    #print (recipe_info)
+    
     #save to recipes table
     if not crud.check_record_exist("Recipe", recipe_info["title"]):
         crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
@@ -272,19 +262,77 @@ def open_favorites():
     
     favorites = crud.get_all_favorites(session.get("user_id"))
     print("+++++++FAVORITES", favorites)
-
+    
     for fav in favorites:
         print("+++++++FAV", fav)
         print(fav.recipe_name)
 
     return render_template('favorites.html', favorites=favorites)
 
-@app.route('/recipe_details_db/<recipe_id>', methods=['POST'])
+@app.route('/recipe_details_db/<recipe_id>')
 def get_recipe_details_db(recipe_id):
 
+    print("FROM DB", recipe_id)
+    
+    recipe_details=crud.get_recipe_info(recipe_id)
+    print("DB recipe name", recipe_details.recipe_name)
+    print("DB recipe image", recipe_details.recipe_image)
 
-    #return render_template('recipe_details.html')
-    return f"recipe details for {recipe_id}"
+    return render_template('recipe_details_db.html', recipe=recipe_details)
+
+@app.route('/import_recipe')
+def import_recipe():
+
+    return render_template('import_recipe.html')
+
+
+@app.route('/imported_recipe', methods=['POST'])
+def open_imported_recipe():
+
+    recipe_link =request.form.get('recipe_link')
+    print("LINK", recipe_link)
+
+    url = f'https://api.spoonacular.com/recipes/extract?url={recipe_link}'
+    payload = {'includeNutrition': True, 'apiKey': API_KEY}
+
+    response = requests.get(url, params=payload)
+    print ("response:", response)
+
+    if response.status_code != 200:
+        response.raise_for_status()
+    
+    recipe_info = response.json()
+
+    print ("+++++Title", recipe_info["title"])
+
+    for item in recipe_info['nutrition']['nutrients']:
+        name, amount, unit = (
+            item["title"], 
+            item["amount"], 
+            item["unit"],)
+      
+        if name=="Calories":
+            cal_amount = amount
+            print (cal_amount)
+
+        if name=="Fat":
+            fat = str(amount)+" "+unit
+            print (fat)
+
+        if name=="Protein":
+            protein = str(amount)+" "+unit
+            print (protein)
+
+        if name=="Net Carbohydrates":
+            carbs = str(amount)+" "+unit
+            print (carbs)
+
+        instructions_list=[]
+        for step in recipe_info['analyzedInstructions'][0]['steps']:
+            instructions_list.append(step['step'])
+
+    return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=recipe_info["extendedIngredients"], instructions_list=instructions_list, dish_type=recipe_info["dishTypes"])
+    
 
 if __name__ == '__main__':
     app.debug = True

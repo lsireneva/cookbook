@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Recipe details{% endblock %}
+{% block body %}
+    <h2 id="recipe_title">{{recipe.recipe_name}}</h2><br>
+
+    <img id ="recipe_image" src="{{recipe.recipe_image}}" width="20%" class="center"><br>
+
+
+{% endblock %}

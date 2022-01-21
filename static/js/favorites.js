@@ -5,9 +5,6 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     evt.preventDefault();
     console.log('add favorites pressed');
     
-    const recipe_id = document.querySelector("#recipe_id").innerHTML;
-    console.log(recipe_id);
-
     const title = document.querySelector("#recipe_title").innerHTML;
     console.log(title);
     
@@ -26,7 +23,8 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     const carbs = document.querySelector("#carbs").innerHTML;
     //console.log(carbs);
 
-    const dish_type = document.querySelector("#dish_type").innerHTML;
+    //const dish_type = document.querySelector("#dish_type").innerHTML;
+    const dish_type="dessert"
     console.log(dish_type);
     
     //const ingredients=document.querySelector("#ingredients").textContent;
@@ -75,7 +73,7 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     const notes=document.querySelector("#notes").value;
     //console.log(notes)
 
-    const recipe_info={"recipe_id": recipe_id, "title": title, "image": image, "time": time, "servings": servings, "calories": calories, "fat": fat, "protein": protein, "carbs": carbs, "dish_type": dish_type, "ingredients": ingredients, "instructions": instructions, "notes": notes};
+    const recipe_info={"title": title, "image": image, "time": time, "servings": servings, "calories": calories, "fat": fat, "protein": protein, "carbs": carbs, "dish_type": dish_type, "ingredients": ingredients, "instructions": instructions, "notes": notes};
     //console.log(recipe_info);
 
     fetch('/save_recipe_to_db', {

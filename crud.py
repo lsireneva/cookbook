@@ -40,7 +40,6 @@ def check_login(email, password):
         return False
     return user
 
-
 def check_record_exist(table, name):
     print("CRUD table:", table)
     print("CRUD name:", name)
@@ -69,13 +68,18 @@ def get_recipe_id(name):
     print("CRUD recipe_id=", recipe.recipe_id)
     return recipe.recipe_id
 
+def get_recipe_info(recipe_id):
+    recipe = Recipe.query.filter(Recipe.recipe_id==recipe_id).first()
+
+    return recipe
+
 def get_ingredient_id(name):
     ingredient = Ingredient.query.filter(Ingredient.ingredient_name==name).one()
     print ("CRUD GET INGREDIENT ID", ingredient.ingredient_id)
     return ingredient.ingredient_id
 
 def get_all_favorites(user_id):
-    favorites = Recipe.query.options(db.joinedload("favorites")).filter(Favorite.user_id==user_id).all()
+    favorites=db.session.query(Recipe).join(Favorite).filter(Favorite.user_id==user_id).all()
     return favorites
 
 if __name__ == "__main__":

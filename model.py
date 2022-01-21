@@ -30,9 +30,9 @@ class Recipe(db.Model):
     __tablename__= "recipes"
 
     recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    recipe_name = db.Column(db.String(100), unique=True, nullable=False)
+    recipe_name = db.Column(db.String, unique=True, nullable=False)
     recipe_instructions = db.Column(db.String, nullable=False)
-    recipe_image = db.Column(db.String(100))
+    recipe_image = db.Column(db.String)
     time = db.Column(db.String(25))
     servings = db.Column(db.String(25))
     calories = db.Column(db.String(25))

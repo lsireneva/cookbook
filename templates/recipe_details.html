@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Recipe details{% endblock %}
 {% block body %}
-    <p id="recipe_id" hidden>{{recipe_id}}</p>
+    
     <h2 id="recipe_title">{{recipe['title']}}</h2><br>
     {% if session["user_id"] %}
         <center><button type="submit" id="add_favorites">Add to Favorites</button> </center>
