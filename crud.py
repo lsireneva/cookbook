@@ -32,8 +32,16 @@ def add_ingredient_to_recipe(recipe_id, ingredient_id, quantity, measure):
     add_to_db(ingredient_to_recipe)
     return True
 
+def check_user_exist(email):
+    email=User.query.filter(User.email == email).first()
+    
+    if email is not None:
+        return True
+    
+    return False
+
 def check_login(email, password):
-    user = User.query.filter(User.email == email).one()
+    user = User.query.filter(User.email == email).first()
     print ("CRUD USER", user)
     
     if user.email != email or user.password != password:
@@ -58,9 +66,10 @@ def check_record_exist(table, name):
 
 
 def get_user_fname(user_id):
-    user = User.query.filter(User.user_id==user_id).one()
+    user = User.query.filter(User.user_id==user_id).first()
+    if user is not None:
+        return user.fname
     
-    return user.fname
 
 def get_recipe_id(name):
     recipe = Recipe.query.filter(Recipe.recipe_name==name).first()
@@ -74,13 +83,39 @@ def get_recipe_info(recipe_id):
     return recipe
 
 def get_ingredient_id(name):
-    ingredient = Ingredient.query.filter(Ingredient.ingredient_name==name).one()
+    ingredient = Ingredient.query.filter(Ingredient.ingredient_name==name).first()
     print ("CRUD GET INGREDIENT ID", ingredient.ingredient_id)
     return ingredient.ingredient_id
 
 def get_all_favorites(user_id):
     favorites=db.session.query(Recipe).join(Favorite).filter(Favorite.user_id==user_id).all()
     return favorites
+
+def get_recipe_category(recipe_id):
+    favorite = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
+    return favorite.category
+
+def get_recipe_ingredients(recipe_id):
+    ingredients = db.session.query(Ingredient.ingredient_name, Ingredient.ingredient_image,
+                        IngredientToRecipe.quantity, IngredientToRecipe.measure).join(IngredientToRecipe).filter(IngredientToRecipe.recipe_id==recipe_id).all()
+
+    return ingredients
+
+def get_ingredient_amount_measure(recipe_id):
+    amount_measure=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id==recipe_id).all()
+    return amount_measure
+
+def delete_recipe(recipe_name):
+    recipe_id = get_recipe_id(recipe_name)
+    print("CRUD DELETE RECIPE", recipe_id)
+    delete_recipe = Recipe.query.filter(Recipe.recipe_id == recipe_id).first()
+    delete_favorite=Favorite.query.filter(Favorite.recipe_id == recipe_id).first()
+    delete_ingredienttorecipe=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id == recipe_id).all()
+    db.session.delete(delete_recipe)
+    db.session.delete(delete_favorite)
+    for i in delete_ingredienttorecipe:
+        db.session.delete(i)
+    db.session.commit()
 
 if __name__ == "__main__":
     from server import app

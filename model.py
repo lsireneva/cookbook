@@ -63,7 +63,7 @@ class Ingredient(db.Model):
 
     # ingredient object
     def __repr__(self):
-        return f"<Ingredient ingredient_id={self.ingredient_id} name={self.name}>"
+        return f"<Ingredient ingredient_id={self.ingredient_id} name={self.ingredient_name} image={self.ingredient_image}>"
 
 
 class IngredientToRecipe(db.Model):
@@ -72,9 +72,9 @@ class IngredientToRecipe(db.Model):
     __tablename__="ingredients_to_recipes"
 
     ingredients_to_recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"))
     ingredient_id = db.Column(db.Integer, db.ForeignKey("ingredients.ingredient_id"), nullable=False)
-    quantity = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Numeric(10, 2), nullable=False)
     measure = db.Column(db.String(25), nullable=False)
 
     # ingredients_to_recipes (db.relationship('IngredientToRecipe', backref='ingredient') on Ingredient model)
@@ -82,7 +82,7 @@ class IngredientToRecipe(db.Model):
 
     # ingredient_to_recipe object
     def __repr__(self):
-        return f"<Ingredient_to_recipe ingredients_to_recipe_id={self.ingredients_to_recipe_id} quantity={self.quantity}>"
+        return f"<Ingredient_to_recipe recipe_id={self.recipe_id} ingredient_id={self.ingredient_id} quantity={self.quantity} measure={self.measure}>"
 
 
 class Favorite(db.Model):

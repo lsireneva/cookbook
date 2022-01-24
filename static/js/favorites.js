@@ -23,8 +23,12 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     const carbs = document.querySelector("#carbs").innerHTML;
     //console.log(carbs);
 
-    //const dish_type = document.querySelector("#dish_type").innerHTML;
-    const dish_type="dessert"
+    let elem = document.querySelector("#dish_type");
+    let dish_type = elem ? elem.innerHTML : "";
+    
+    if(!dish_type) {
+      dish_type="general"
+    }
     console.log(dish_type);
     
     //const ingredients=document.querySelector("#ingredients").textContent;
@@ -67,8 +71,8 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     //console.log(ingredient_image);
 
     const instructions=document.querySelector("#instructions").textContent;
-    //console.log(document.querySelector("#instructions"))
-    //console.log(instructions);
+    console.log(document.querySelector("#instructions"))
+    console.log(instructions);
     
     const notes=document.querySelector("#notes").value;
     //console.log(notes)

@@ -34,14 +34,15 @@
             </grid_item>
             {%endfor%}    
     </div>
-
+    
+    <h2>Instructions:</h2>
+    
     <ol id="instructions">
-        <h3>Instructions:</h3>
         {%for step in instructions_list%}
         <li>{{step}}</li>
         {%endfor%}
     </ol><br>
-
+    
     <center><textarea id="notes" rows="4" cols="50" name="notes" form="usrform" placeholder="Input your notes here"></textarea></center><br><br>
 
 

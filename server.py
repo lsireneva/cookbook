@@ -22,12 +22,12 @@ model.connect_to_db(app)
 def homepage():
     """Show homepage."""
     print("GET SESSION:",session.get('user_id'))
-    if session.get('user_id') == None:
-        return render_template('homepage.html')
-    else:
+    if session.get('user_id') != None:
         user_id = session['user_id']
         fname = crud.get_user_fname(user_id)   
         return render_template('homepage.html', fname=fname)
+    else:
+        return render_template('homepage.html')
         
 
 @app.route('/signup')
@@ -47,11 +47,16 @@ def create_user():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    if crud.add_new_user(fname,lname,email,password):
-        flash('New user account created', 'message')
+    if crud.check_user_exist(email):
+        flash('User account with this email already exist, Please login.', 'message')
+        return redirect('/login')
     else:
-        flash('User creation failed', 'error')
-    return redirect('/')
+        if crud.add_new_user(fname,lname,email,password):
+            flash('New user account created', 'message')
+            return redirect('/login')
+        else:
+            flash('User creation failed', 'error')
+            return redirect('/')
 
 
 @app.route('/login')
@@ -75,7 +80,7 @@ def check_login():
     email = request.form.get('email')
     password = request.form.get('password')
     print ("email", email)
-    print("password", password)
+    
 
     user = crud.check_login(email, password)
     print ("USER:", user)
@@ -278,7 +283,21 @@ def get_recipe_details_db(recipe_id):
     print("DB recipe name", recipe_details.recipe_name)
     print("DB recipe image", recipe_details.recipe_image)
 
-    return render_template('recipe_details_db.html', recipe=recipe_details)
+    ingredients = crud.get_recipe_ingredients(recipe_id)
+    print("INGREDIENTS:", ingredients)
+    for i in ingredients:
+     
+        print("INGREDIENT_INAGE:", i.ingredient_image)
+        print("INGREDIENT_name:", i.ingredient_name)
+        print("INGREDIENT_amount:", i.quantity)
+        print("INGREDIENT_measure:", i.measure)
+    
+    instructions = recipe_details.recipe_instructions.strip().split("\n        \n        ")
+    print("STEPS:", instructions)
+    favorite_category=crud.get_recipe_category(recipe_id)
+
+
+    return render_template('recipe_details_db.html', recipe=recipe_details, category=favorite_category, instructions=instructions, ingredients=ingredients)
 
 @app.route('/import_recipe')
 def import_recipe():
@@ -332,7 +351,14 @@ def open_imported_recipe():
             instructions_list.append(step['step'])
 
     return render_template('recipe_details.html', recipe=recipe_info, calories=cal_amount, fat=fat, protein=protein, carbs=carbs, ingredients_list=recipe_info["extendedIngredients"], instructions_list=instructions_list, dish_type=recipe_info["dishTypes"])
+
+@app.route('/delete_recipe_db', methods=['GET', 'POST'])
+def delete_recipe_db(): 
+    recipe_name = request.get_json().get("recipe_name")
+    print("DELETE", recipe_name)  
+    crud.delete_recipe(recipe_name)
     
+    return jsonify({"status": "Recipe deleted from favorites"})
 
 if __name__ == '__main__':
     app.debug = True
