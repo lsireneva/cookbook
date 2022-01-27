@@ -81,10 +81,8 @@ def check_login():
     password = request.form.get('password')
     print ("email", email)
     
-
     user = crud.check_login(email, password)
     print ("USER:", user)
-    
     
     if user:
         session['user_id'] = user.user_id
@@ -103,7 +101,7 @@ def get_recipes():
     print("******Input Ingredients:*****", ingredients)
 
     url = 'https://api.spoonacular.com/recipes/findByIngredients'
-    payload = {'ingredients': ingredients, 'number': 10, 'apiKey': API_KEY}
+    payload = {'ingredients': ingredients, 'number': 4, 'apiKey': API_KEY}
 
     response = requests.get(url, params=payload)
 
@@ -150,7 +148,7 @@ def get_recipes_advanced():
                 'includeIngredients': includeIngredients,
                 'type': meal_type,
                 'addRecipeInformation': True,
-                'number': 5, 
+                'number': 4, 
                 'apiKey': API_KEY}
 
     response = requests.get(url, params=payload)
@@ -236,6 +234,13 @@ def save_recipe_to_db():
     #save to recipes table
     if not crud.check_record_exist("Recipe", recipe_info["title"]):
         crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
+    elif not crud.check_in_favorites(crud.get_recipe_id(recipe_info["title"])):
+        #save to favorites table
+        if session.get("user_id"):
+            print("USER_ID", session.get("user_id"))
+            crud.add_new_favorite(session.get("user_id"), crud.get_recipe_id(recipe_info["title"]), recipe_info["dish_type"])
+        return jsonify({"status": "Recipe saved to favorites"})
+        
     else:
         return jsonify({"status": "You have already added this recipe to favorites"})
 
@@ -360,6 +365,66 @@ def delete_recipe_db():
     
     return jsonify({"status": "Recipe deleted from favorites"})
 
+@app.route('/save_to_meal_plan', methods=['GET', 'POST'])
+def save_to_meal_plan():
+    recipe_info = request.get_json().get("recipe_info")
+    print(recipe_info)
+    #save to recipes table
+    if not crud.check_record_exist("Recipe", recipe_info["title"]):
+        crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
+    else:
+        return jsonify({"status": "You have already added this recipe to favorites"})
+
+    #save to meal_plans table
+    if session.get("user_id"):
+        print("USER_ID", session.get("user_id"))
+        crud.add_new_meal_plan(session.get("user_id"), crud.get_recipe_id(recipe_info["title"]), recipe_info["meal_category"], recipe_info["meal_date"])
+    
+    #save to ingredients table and to IngredientToRecipe table
+    for ingredient in recipe_info["ingredients"]:
+        print(ingredient["name"])
+        print(ingredient["image"])
+        if not crud.check_record_exist("Ingredient", ingredient["name"]):
+            crud.add_new_ingredient(ingredient["name"], ingredient["image"])
+    
+    for ingredient in recipe_info["ingredients"]:
+        print(ingredient["amount"])
+        print(ingredient["unit"])
+        print(crud.get_ingredient_id(ingredient["name"]))
+        
+        if crud.get_recipe_id(recipe_info["title"]) is not None:
+            crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
+    
+    
+    return jsonify({"status": "Recipe added to meal plan"})
+
+@app.route('/show_calendar')
+def show_calendar():
+    
+    meal_plan = crud.get_all_meal_plan(session.get("user_id"))
+    #print("+++++++MEAL_PLAN", meal_plan)
+    
+    meal_plan_arr=[]
+    meal_dict={}
+    for meal in meal_plan:
+        print("+++++++MEAL PLAN", meal)
+
+        meal_info=crud.get_mealplan_info(meal.recipe_id)
+        print("+++++++MEAL INFO", meal_info)
+
+        if meal_info.date not in meal_dict:
+            meal_dict[meal_info.date]={"breakfast": [], "lunch": [], "dinner": []}
+        
+        meal_dict[meal_info.date][meal_info.category].append(meal.recipe_name)
+        
+
+    meal_plan_arr.append(meal_dict)
+    print("MEAL DICTIONARY", meal_dict)
+    print("ARRAY MEAL PLAN ALL", meal_plan_arr)
+    
+    return render_template('meal_calendar.html', meal_plan=meal_plan_arr)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0')
+

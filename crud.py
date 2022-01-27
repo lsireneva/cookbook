@@ -1,6 +1,5 @@
 """Functions for working with the database"""
-
-from model import User, Recipe, Ingredient, IngredientToRecipe, Favorite, connect_to_db, db
+from model import User, Recipe, Ingredient, IngredientToRecipe, Favorite, MealPlan, connect_to_db, db
 
 def add_to_db(record):
     db.session.add(record)
@@ -20,6 +19,11 @@ def add_new_recipe(recipe_name, recipe_instructions, recipe_image, time, serving
 def add_new_favorite(user_id, recipe_id, category):
     favorite = Favorite(user_id=user_id, recipe_id=recipe_id, category=category)
     add_to_db(favorite)
+    return True
+
+def add_new_meal_plan(user_id, recipe_id, meal_category, meal_date):
+    meal_plan = MealPlan(user_id=user_id, recipe_id=recipe_id, category=meal_category, date=meal_date)
+    add_to_db(meal_plan)
     return True
 
 def add_new_ingredient(name, image):
@@ -64,6 +68,11 @@ def check_record_exist(table, name):
     else:
         return False
 
+def check_in_favorites(recipe_id):
+    fav_recipe = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
+    if fav_recipe is not None:
+        return True
+    return False
 
 def get_user_fname(user_id):
     user = User.query.filter(User.user_id==user_id).first()
@@ -90,6 +99,14 @@ def get_ingredient_id(name):
 def get_all_favorites(user_id):
     favorites=db.session.query(Recipe).join(Favorite).filter(Favorite.user_id==user_id).all()
     return favorites
+
+def get_all_meal_plan(user_id):
+    meal_plan=db.session.query(Recipe).join(MealPlan).filter(MealPlan.user_id==user_id).order_by(MealPlan.date, MealPlan.category).all()
+    return meal_plan
+
+def get_mealplan_info(recipe_id):
+    mealplan_info=MealPlan.query.filter(MealPlan.recipe_id==recipe_id).first()
+    return mealplan_info
 
 def get_recipe_category(recipe_id):
     favorite = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()

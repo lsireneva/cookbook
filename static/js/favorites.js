@@ -1,6 +1,5 @@
 "use strict";
 
-
 document.querySelector("#add_favorites").addEventListener("click", evt => {
     evt.preventDefault();
     console.log('add favorites pressed');
@@ -91,6 +90,5 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
         .then(responseJson => {
           alert(responseJson.status);
         });
-
 
 });

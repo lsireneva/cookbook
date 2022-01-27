@@ -98,9 +98,28 @@ class Favorite(db.Model):
     # user (db.relationship('Favorite', backref='user') on User model)
     # recipe (db.relationship('Favorite', backref='recipe') on Recipe model)
 
-    # ingredient object
+    # favorite object
     def __repr__(self):
         return f"<Favorite favorite_id={self.favorite_id} category={self.category}>"
+
+class MealPlan(db.Model):
+    """Recipes for a meal plan""" 
+
+    __tablename__="meal_plans"
+
+    meal_plan_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey("recipes.recipe_id"), unique=True, nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    date = db.Column(db.Date, nullable=False)
+
+    # user (db.relationship('MealPlan', backref='user') on User model)
+    # recipe (db.relationship('MealPlan', backref='recipe') on Recipe model)
+
+    # favorite object
+    def __repr__(self):
+        return f"<MealPlan meal_plan_id={self.meal_plan_id} category={self.category} date={self.date}>"
+
 
 
 

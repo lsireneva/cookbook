@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Meal Plan{% endblock %}
+
+{% block body %}
+<h1>Meal Plan:</h1><br>
+<center>
+    <table>
+        <tr>
+        <th>Meal:</th> 
+        {%for day in meal_plan%}
+            {%for key in day%}
+                <th>{{key}}</th>
+            {%endfor%}
+        {%endfor%}
+        </tr>
+
+        <tr>
+        <td>breakfast</td>
+        {%for day in meal_plan%}
+            {%for key in day%}
+                <th>{%for i in day[key]['breakfast']%}
+                    <p class="p-meal-plan">{{i}}</p>
+                {%endfor%}
+                </th>
+            {%endfor%}
+        {%endfor%}
+        </tr>
+    
+        <tr>
+        <td>lunch</td>
+        {%for day in meal_plan%}
+            {%for key in day%}
+                <th>{%for i in day[key]['lunch']%}
+                    <p class="p-meal-plan">{{i}}</p>
+                {%endfor%}
+                </th>
+            {%endfor%}
+        {%endfor%}
+        </tr>
+    
+        <tr>
+        <td>dinner</td>
+        {%for day in meal_plan%}
+            {%for key in day%}
+                <th>{%for i in day[key]['dinner']%}
+                    <p class="p-meal-plan">{{i}}</p>
+                {%endfor%}
+                </th>
+            {%endfor%}
+        {%endfor%}
+        </tr>
+    </table>
+</center> 
+
+</script>
+{% endblock %}

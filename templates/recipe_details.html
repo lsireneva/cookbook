@@ -4,12 +4,40 @@
     
     <h2 id="recipe_title">{{recipe['title']}}</h2><br>
     {% if session["user_id"] %}
-        <center><button type="submit" id="add_favorites">Add to Favorites</button> </center>
+        <center>
+            <button type="submit" id="add_favorites" style="display:inline;">Add to Favorites</button> 
+            <button type="submit" id="add_meal_plan" style="display:inline;">Add to Meal plan</button>
+        </center><br>
     {% else %}
         <center><button type="submit" id="add_favorites" hidden>Add to Favorites</button> </center>
     {% endif %}  
     <img id ="recipe_image" src="{{recipe['image']}}" width="20%" class="center"><br>
-
+     <!-- The Modal window -->
+     <center>
+     <div id="date_category_modal_window" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <p>Choose date and category</p>
+                <span class="close">&times;</span>
+            </div>
+            <section class="modal-body">
+                <label for="meal_date">Date:</label>
+                <input type="date" id="meal_date" name="meal_date">
+            </section>
+            <section class="modal-body">
+                <label>Choose a category:</label>
+                <select name="meal_category" id="meal_category">
+                    <option value="none" selected disabled hidden>Select an Option</option>
+                    <option value="breakfast">breakfast</option>
+                    <option value="lunch">lunch</option>
+                    <option value="dinner">dinner</option>
+                </select>
+            </section>
+            <center><button type="submit" id="add_date_category">Add</button></center>
+        </div>
+    </div>
+    </center>
     <center>
         <label class="recipe-label" for="time">Time:</label><h2 id="time" style="display:inline;">{{recipe['readyInMinutes']}}min</h2>
         <label class="recipe-label" for="servings">Servings:</label><h2 id="servings" style="display:inline;">{{recipe['servings']}}</h2> 
@@ -47,4 +75,5 @@
 
 
 <script src="/static/js/favorites.js"></script>
+<script src="/static/js/meal_plan.js"></script>
 {% endblock %}
