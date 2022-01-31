@@ -2,7 +2,25 @@
 {% block title %}Meal Plan{% endblock %}
 
 {% block body %}
-<h1>Meal Plan:</h1><br>
+<h1>Meal Plan</h1><br>
+
+<center>
+    <a href="/" style="color: transparent"><button type="submit" id="add_recipe" style="display:inline;">Add recipe to Meal Plan</button></a> 
+    <button type="submit" id="grocery_list" style="display:inline;">Get Grocery List</button>
+</center><br>
+<center>
+    <section>
+        <form action="/open_meal_plan" method="POST"> 
+            <label for="start_date"> Start Date:</label>
+            <input type="date" id="start_date" name="monday">
+            <label for="end_date"> End Date:</label>
+            <input type="date" id="end_date" name="sunday">
+            <button type="submit" id="open">Open Meal Plan</button>
+        </form>
+    </section>
+</center>
+
+<h2>for a week: {{start_day}} - {{end_day}} </h2>
 <center>
     <table>
         <tr>
@@ -19,7 +37,9 @@
         {%for day in meal_plan%}
             {%for key in day%}
                 <th>{%for i in day[key]['breakfast']%}
-                    <p class="p-meal-plan">{{i}}</p>
+                    <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
+                        <p class="p-meal-plan">{{i.recipe_name}}</p>
+                    </a>
                 {%endfor%}
                 </th>
             {%endfor%}
@@ -31,7 +51,9 @@
         {%for day in meal_plan%}
             {%for key in day%}
                 <th>{%for i in day[key]['lunch']%}
-                    <p class="p-meal-plan">{{i}}</p>
+                    <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
+                        <p class="p-meal-plan">{{i.recipe_name}}</p>
+                    </a>
                 {%endfor%}
                 </th>
             {%endfor%}
@@ -43,7 +65,9 @@
         {%for day in meal_plan%}
             {%for key in day%}
                 <th>{%for i in day[key]['dinner']%}
-                    <p class="p-meal-plan">{{i}}</p>
+                    <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
+                        <p class="p-meal-plan">{{i.recipe_name}}</p>
+                    </a>
                 {%endfor%}
                 </th>
             {%endfor%}
@@ -52,5 +76,4 @@
     </table>
 </center> 
 
-</script>
 {% endblock %}

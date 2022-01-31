@@ -7,6 +7,9 @@ from pprint import pformat
 import requests
 import model
 import crud
+import calendar
+import datetime
+from datetime import timedelta
 
 
 app = Flask(__name__)
@@ -188,8 +191,9 @@ def get_recipe_details(recipe_id):
     print ("+++++Title", recipe_info["title"])
 
     for item in recipe_info['nutrition']['nutrients']:
+        print("item", item)
         name, amount, unit = (
-            item["title"], 
+            item["name"], 
             item["amount"], 
             item["unit"],)
        
@@ -299,11 +303,13 @@ def get_recipe_details_db(recipe_id):
     
     instructions = recipe_details.recipe_instructions.strip().split("\n        \n        ")
     print("STEPS:", instructions)
-    favorite_category=crud.get_recipe_category(recipe_id)
+    
+    category = crud.get_recipe_category(recipe_id)
 
+    print ("CATEGORY", category)
 
-    return render_template('recipe_details_db.html', recipe=recipe_details, category=favorite_category, instructions=instructions, ingredients=ingredients)
-
+    return render_template('recipe_details_db.html', recipe=recipe_details, category=category, instructions=instructions, ingredients=ingredients)
+    #return jsonify("You have already added this recipe to favorites")
 @app.route('/import_recipe')
 def import_recipe():
 
@@ -331,7 +337,7 @@ def open_imported_recipe():
 
     for item in recipe_info['nutrition']['nutrients']:
         name, amount, unit = (
-            item["title"], 
+            item["name"], 
             item["amount"], 
             item["unit"],)
       
@@ -372,8 +378,6 @@ def save_to_meal_plan():
     #save to recipes table
     if not crud.check_record_exist("Recipe", recipe_info["title"]):
         crud.add_new_recipe(recipe_info["title"], recipe_info["instructions"], recipe_info["image"], recipe_info["time"], recipe_info["servings"], recipe_info["calories"], recipe_info["fat"], recipe_info["protein"], recipe_info["carbs"], recipe_info["notes"])
-    else:
-        return jsonify({"status": "You have already added this recipe to favorites"})
 
     #save to meal_plans table
     if session.get("user_id"):
@@ -398,10 +402,19 @@ def save_to_meal_plan():
     
     return jsonify({"status": "Recipe added to meal plan"})
 
-@app.route('/show_calendar')
-def show_calendar():
+
+@app.route('/show_meal_plan')
+def show_meal_plan():
+    current_time = datetime.date.today()
+    print("CURRENT TIME", current_time)
+    year, week_num, day_of_week = current_time.isocalendar()
+    print("Week #" + str(week_num) + " of year " + str(year))
+
+    monday = datetime.datetime.strptime(f'{str(year)}-{str(week_num)}-1', "%Y-%W-%w").date()
+    sunday = monday + datetime.timedelta(days=6.9)
     
-    meal_plan = crud.get_all_meal_plan(session.get("user_id"))
+    
+    meal_plan = crud.get_all_meal_plan_current_week(session.get("user_id"), monday, sunday)
     #print("+++++++MEAL_PLAN", meal_plan)
     
     meal_plan_arr=[]
@@ -415,14 +428,57 @@ def show_calendar():
         if meal_info.date not in meal_dict:
             meal_dict[meal_info.date]={"breakfast": [], "lunch": [], "dinner": []}
         
-        meal_dict[meal_info.date][meal_info.category].append(meal.recipe_name)
+        meal_dict[meal_info.date][meal_info.category].append(meal)
         
 
     meal_plan_arr.append(meal_dict)
     print("MEAL DICTIONARY", meal_dict)
     print("ARRAY MEAL PLAN ALL", meal_plan_arr)
     
-    return render_template('meal_calendar.html', meal_plan=meal_plan_arr)
+    return render_template('meal_calendar.html', meal_plan=meal_plan_arr, start_day=monday, end_day=sunday)
+
+@app.route('/open_meal_plan', methods=['GET', 'POST'])
+def open_meal_plan():
+    print("inside of route open_meal_plan")
+   
+    monday = request.form.get('monday')
+    sunday = request.form.get('sunday')
+    print("monday", monday)
+    print("sunday", sunday)
+
+    meal_plan = crud.get_all_meal_plan_current_week(session.get("user_id"), monday, sunday)
+    print("+++++++MEAL_PLAN", meal_plan)
+    
+    meal_plan_arr=[]
+    meal_dict={}
+    for meal in meal_plan:
+        print("+++++++MEAL PLAN", meal)
+
+        meal_info=crud.get_mealplan_info(meal.recipe_id)
+        print("+++++++MEAL INFO", meal_info)
+
+        if meal_info.date not in meal_dict:
+            meal_dict[meal_info.date]={"breakfast": [], "lunch": [], "dinner": []}
+        
+        meal_dict[meal_info.date][meal_info.category].append(meal)
+        
+
+    meal_plan_arr.append(meal_dict)
+    print("MEAL DICTIONARY", meal_dict)
+    print("ARRAY MEAL PLAN ALL", meal_plan_arr)
+
+    return render_template('meal_calendar.html', meal_plan=meal_plan_arr, start_day=monday, end_day=sunday)
+
+@app.route('/open_recipe_meal_plan/<recipe_name>', methods=['GET', 'POST'])
+def open_recipe_meal_plan(recipe_name):
+    print("OPEN RECIPE MEAL PLAN")
+    print("OPEN recipe_name",recipe_name)
+    recipe_id = crud.get_recipe_id(recipe_name)
+    
+    return redirect(url_for('.get_recipe_details_db', recipe_id = recipe_id))
+   
+    
+
 
 if __name__ == '__main__':
     app.debug = True

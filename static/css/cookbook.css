@@ -53,11 +53,10 @@ p{
   padding: 5px;  
   margin: 5px;
   border-radius: 10px;
-  color: white;
+  color:white;
   font-family: Avenir;
   background-color: #33475b;
-  width: fit-content;
-  font-size: 14px;
+  font-size: 16px;
 
 }
 

@@ -116,7 +116,7 @@ class MealPlan(db.Model):
     # user (db.relationship('MealPlan', backref='user') on User model)
     # recipe (db.relationship('MealPlan', backref='recipe') on Recipe model)
 
-    # favorite object
+    # meal plan object
     def __repr__(self):
         return f"<MealPlan meal_plan_id={self.meal_plan_id} category={self.category} date={self.date}>"
 

@@ -100,8 +100,15 @@ def get_all_favorites(user_id):
     favorites=db.session.query(Recipe).join(Favorite).filter(Favorite.user_id==user_id).all()
     return favorites
 
-def get_all_meal_plan(user_id):
-    meal_plan=db.session.query(Recipe).join(MealPlan).filter(MealPlan.user_id==user_id).order_by(MealPlan.date, MealPlan.category).all()
+def get_all_meal_plan_current_week(user_id, start, end):
+    #get meal plan for a current week
+    #meal_plan=db.session.query(Recipe).join(MealPlan).filter(MealPlan.user_id==user_id).order_by(MealPlan.date, MealPlan.category).all()
+    print("CRUD start day:", start)
+    print("CRUD end day:", end)
+
+    meal_plan = db.session.query(Recipe).join(MealPlan).filter(MealPlan.user_id==user_id).filter(MealPlan.date <= end).\
+         filter(MealPlan.date >= start).order_by(MealPlan.date, MealPlan.category).all()
+
     return meal_plan
 
 def get_mealplan_info(recipe_id):
@@ -110,7 +117,14 @@ def get_mealplan_info(recipe_id):
 
 def get_recipe_category(recipe_id):
     favorite = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
-    return favorite.category
+    meal_plan = MealPlan.query.filter(MealPlan.recipe_id==recipe_id).first()
+
+    if favorite is not None:
+        return favorite.category
+    else:
+        return meal_plan.category
+
+
 
 def get_recipe_ingredients(recipe_id):
     ingredients = db.session.query(Ingredient.ingredient_name, Ingredient.ingredient_image,
