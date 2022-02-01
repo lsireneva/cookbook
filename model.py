@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     
     """Users in cook book app"""
@@ -17,6 +18,7 @@ class User(db.Model):
     password = db.Column(db.String)
 
     favorites = db.relationship('Favorite', backref='user')
+    meal_plan = db.relationship('MealPlan', backref='user')
 
     # user object
     def __repr__(self):
@@ -42,6 +44,7 @@ class Recipe(db.Model):
     note = db.Column(db.String(300))
 
     favorites = db.relationship('Favorite', backref='recipe')
+    meal_plan=db.relationship('MealPlan', backref='recipe')
     ingredients_to_recipes = db.relationship('IngredientToRecipe', backref='recipe')
 
     # recipe object
@@ -58,6 +61,7 @@ class Ingredient(db.Model):
     ingredient_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     ingredient_name = db.Column(db.String(50), unique=True, nullable=False)
     ingredient_image = db.Column(db.String(100), nullable=False)
+    ingredient_aisle=db.Column(db.String)
 
     ingredients_to_recipes = db.relationship('IngredientToRecipe', backref='ingredient')
 

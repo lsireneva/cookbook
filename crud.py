@@ -26,8 +26,8 @@ def add_new_meal_plan(user_id, recipe_id, meal_category, meal_date):
     add_to_db(meal_plan)
     return True
 
-def add_new_ingredient(name, image):
-    ingredient = Ingredient(ingredient_name=name, ingredient_image=image)
+def add_new_ingredient(name, image, aisle):
+    ingredient = Ingredient(ingredient_name=name, ingredient_image=image, ingredient_aisle=aisle)
     add_to_db(ingredient)
     return True
 
@@ -68,6 +68,13 @@ def check_record_exist(table, name):
     else:
         return False
 
+def check_record_in_ingredients_to_recipes(recipe_id, ingredient_id):
+    record=IngredientToRecipe.query.filter(Recipe.recipe_id==recipe_id).filter(Ingredient.ingredient_id==ingredient_id).first()
+    if record is not None:
+        return True
+    return False
+
+
 def check_in_favorites(recipe_id):
     fav_recipe = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
     if fav_recipe is not None:
@@ -102,7 +109,6 @@ def get_all_favorites(user_id):
 
 def get_all_meal_plan_current_week(user_id, start, end):
     #get meal plan for a current week
-    #meal_plan=db.session.query(Recipe).join(MealPlan).filter(MealPlan.user_id==user_id).order_by(MealPlan.date, MealPlan.category).all()
     print("CRUD start day:", start)
     print("CRUD end day:", end)
 
@@ -111,7 +117,7 @@ def get_all_meal_plan_current_week(user_id, start, end):
 
     return meal_plan
 
-def get_mealplan_info(recipe_id):
+def get_mealplan_recipe_info(recipe_id):
     mealplan_info=MealPlan.query.filter(MealPlan.recipe_id==recipe_id).first()
     return mealplan_info
 
@@ -125,9 +131,8 @@ def get_recipe_category(recipe_id):
         return meal_plan.category
 
 
-
 def get_recipe_ingredients(recipe_id):
-    ingredients = db.session.query(Ingredient.ingredient_name, Ingredient.ingredient_image,
+    ingredients = db.session.query(Ingredient.ingredient_name, Ingredient.ingredient_image, Ingredient.ingredient_aisle,
                         IngredientToRecipe.quantity, IngredientToRecipe.measure).join(IngredientToRecipe).filter(IngredientToRecipe.recipe_id==recipe_id).all()
 
     return ingredients
@@ -139,13 +144,18 @@ def get_ingredient_amount_measure(recipe_id):
 def delete_recipe(recipe_name):
     recipe_id = get_recipe_id(recipe_name)
     print("CRUD DELETE RECIPE", recipe_id)
-    delete_recipe = Recipe.query.filter(Recipe.recipe_id == recipe_id).first()
-    delete_favorite=Favorite.query.filter(Favorite.recipe_id == recipe_id).first()
-    delete_ingredienttorecipe=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id == recipe_id).all()
-    db.session.delete(delete_recipe)
-    db.session.delete(delete_favorite)
-    for i in delete_ingredienttorecipe:
-        db.session.delete(i)
+    if get_mealplan_recipe_info(recipe_id) is not None:
+        delete_favorite=Favorite.query.filter(Favorite.recipe_id == recipe_id).first()
+        db.session.delete(delete_favorite)
+    else:
+        delete_favorite=Favorite.query.filter(Favorite.recipe_id == recipe_id).first()
+        delete_recipe = Recipe.query.filter(Recipe.recipe_id == recipe_id).first()
+        delete_ingredienttorecipe=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id == recipe_id).all()
+        db.session.delete(delete_recipe)
+        db.session.delete(delete_favorite)
+    
+        for i in delete_ingredienttorecipe:
+            db.session.delete(i)
     db.session.commit()
 
 if __name__ == "__main__":

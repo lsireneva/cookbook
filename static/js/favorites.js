@@ -6,7 +6,7 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
     
     const title = document.querySelector("#recipe_title").innerHTML;
     console.log(title);
-    
+
     const image=document.querySelector("#recipe_image").getAttribute("src");
     //console.log(image);
     const time = document.querySelector("#time").innerHTML;
@@ -57,6 +57,10 @@ document.querySelector("#add_favorites").addEventListener("click", evt => {
           if (block.children[j].id=="unit"){
             const unit=block_dict["unit"]=block.children[j].innerHTML;
             block_dict["unit"]=unit;
+          }
+          if (block.children[j].id=="aisle"){
+            const aisle=block_dict["aisle"]=block.children[j].innerHTML;
+            block_dict["aisle"]=aisle;
           }
         console.log(block_dict);  
       }

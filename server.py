@@ -257,8 +257,9 @@ def save_recipe_to_db():
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["name"])
         print(ingredient["image"])
+        print(ingredient["aisle"])
         if not crud.check_record_exist("Ingredient", ingredient["name"]):
-            crud.add_new_ingredient(ingredient["name"], ingredient["image"])
+            crud.add_new_ingredient(ingredient["name"], ingredient["image"], ingredient["aisle"])
     
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["amount"])
@@ -296,8 +297,9 @@ def get_recipe_details_db(recipe_id):
     print("INGREDIENTS:", ingredients)
     for i in ingredients:
      
-        print("INGREDIENT_INAGE:", i.ingredient_image)
+        print("INGREDIENT_image:", i.ingredient_image)
         print("INGREDIENT_name:", i.ingredient_name)
+        print("INGREDIENT_aisle:", i.ingredient_aisle)
         print("INGREDIENT_amount:", i.quantity)
         print("INGREDIENT_measure:", i.measure)
     
@@ -388,16 +390,18 @@ def save_to_meal_plan():
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["name"])
         print(ingredient["image"])
+        print(ingredient["aisle"])
         if not crud.check_record_exist("Ingredient", ingredient["name"]):
-            crud.add_new_ingredient(ingredient["name"], ingredient["image"])
+            crud.add_new_ingredient(ingredient["name"], ingredient["image"], ingredient["aisle"])
     
     for ingredient in recipe_info["ingredients"]:
         print(ingredient["amount"])
         print(ingredient["unit"])
         print(crud.get_ingredient_id(ingredient["name"]))
-        
+
         if crud.get_recipe_id(recipe_info["title"]) is not None:
-            crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
+            if not crud.check_record_in_ingredients_to_recipes(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"])):
+                crud.add_ingredient_to_recipe(crud.get_recipe_id(recipe_info["title"]), crud.get_ingredient_id(ingredient["name"]), ingredient["amount"], ingredient["unit"])
     
     
     return jsonify({"status": "Recipe added to meal plan"})
@@ -422,7 +426,7 @@ def show_meal_plan():
     for meal in meal_plan:
         print("+++++++MEAL PLAN", meal)
 
-        meal_info=crud.get_mealplan_info(meal.recipe_id)
+        meal_info=crud.get_mealplan_recipe_info(meal.recipe_id)
         print("+++++++MEAL INFO", meal_info)
 
         if meal_info.date not in meal_dict:
@@ -454,7 +458,7 @@ def open_meal_plan():
     for meal in meal_plan:
         print("+++++++MEAL PLAN", meal)
 
-        meal_info=crud.get_mealplan_info(meal.recipe_id)
+        meal_info=crud.get_mealplan_recipe_info(meal.recipe_id)
         print("+++++++MEAL INFO", meal_info)
 
         if meal_info.date not in meal_dict:
@@ -477,7 +481,30 @@ def open_recipe_meal_plan(recipe_name):
     
     return redirect(url_for('.get_recipe_details_db', recipe_id = recipe_id))
    
+@app.route('/get_grocery_list', methods=['GET', 'POST'])
+def get_grocery_list():
+    current_time = datetime.date.today()
+    print("CURRENT TIME", current_time)
+    year, week_num, day_of_week = current_time.isocalendar()
+    print("Week #" + str(week_num) + " of year " + str(year))
+    monday = datetime.datetime.strptime(f'{str(year)}-{str(week_num)}-1', "%Y-%W-%w").date()
+    sunday = monday + datetime.timedelta(days=6.9)
+
+    grocery_list = crud.get_all_meal_plan_current_week(session.get("user_id"), monday, sunday)
+    print("GROCERY LIST", grocery_list)
     
+    all_ingredients={}
+    for item in grocery_list:
+        print (item.recipe_name)
+        ingredients = crud.get_recipe_ingredients(item.recipe_id)
+        for i in ingredients:
+            if i.ingredient_aisle not in all_ingredients:
+                all_ingredients[i.ingredient_aisle]=set()
+            all_ingredients[i.ingredient_aisle].add(i.ingredient_name)
+
+    print ("____all_ingredients:", all_ingredients)
+
+    return render_template('grocery_list.html', grocery_list=all_ingredients,start_day=monday, end_day=sunday)
 
 
 if __name__ == '__main__':

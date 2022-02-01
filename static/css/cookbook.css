@@ -13,9 +13,17 @@ h2 {
 
 h3{
   padding: 20px 20px;
-  text-align: left;    
   color: #33475b;
   text-align: center;
+  font-family: Avenir;
+}
+
+h4{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;    
+  color: white;
+  font-family: Avenir;
 }
 
 button{
@@ -35,6 +43,7 @@ section, ul, ol{
   font-family: Avenir;
   background-color: #33475b;
   width: fit-content;
+  text-align: left;
 }
 
 p{
@@ -46,7 +55,6 @@ p{
   background-color: #33475b;
   width: fit-content;
   font-size: 18px;
-
 }
 
 .p-meal-plan{

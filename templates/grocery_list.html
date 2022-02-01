@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Grocery List{% endblock %}
+
+{% block body %}
+<h1>Grocery List</h1><br>
+<h2>for week {{start_day}} - {{end_day}}</h2><br>
+<!-- {%for aisle in aisles%}
+    <h3>{{aisle}}</h3>
+{%endfor%} -->
+<center> 
+<form>   
+    <ul>
+    {%for key in grocery_list%}
+        <h4>{{key}}</h4>
+        {%for item in grocery_list[key]%}
+            <li>{{item}}</li> 
+        {%endfor%}   
+    {%endfor%}
+    </ul>
+</form>
+</center>    
+<center><button type="submit" id="grocery_list">Send text message</button></center>
+{% endblock %}

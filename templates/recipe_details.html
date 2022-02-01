@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Recipe details{% endblock %}
 {% block body %}
-    
     <h2 id="recipe_title">{{recipe['title']}}</h2><br>
     {% if session["user_id"] %}
         <center>
@@ -9,7 +8,10 @@
             <button type="submit" id="add_meal_plan" style="display:inline;">Add to Meal plan</button>
         </center><br>
     {% else %}
-        <center><button type="submit" id="add_favorites" hidden>Add to Favorites</button> </center>
+        <center>
+            <button type="submit" id="add_favorites" hidden>Add to Favorites</button> 
+            <button type="submit" id="add_meal_plan" style="display:inline;" hidden>Add to Meal plan</button>
+        </center>
     {% endif %}  
     <img id ="recipe_image" src="{{recipe['image']}}" width="20%" class="center"><br>
      <!-- The Modal window -->
@@ -57,6 +59,7 @@
     <div id="ingredients" class="grid-container">    
             {%for ingredient in ingredients_list%}
             <grid_item id="item" style="border:solid">
+                <p id="aisle" hidden>{{ingredient["aisle"]}}</p>
                 <img id="ingredient_image" src="https://spoonacular.com/cdn/ingredients_100x100/{{ingredient['image']}}">
                 <div id="amount" class="ingredient-div">{{ingredient["amount"]}}</div>&nbsp<div id="unit" class="ingredient-div">{{ingredient["unit"]}}</div>&nbsp<div id="name" class="ingredient-div">{{ingredient["name"]}}</div> 
             </grid_item>

@@ -25,8 +25,6 @@ btn.onclick = function() {
     
         modal.style.display = "none";
 
-        const recipe_id = document.querySelector("#recipe_id").innerHTML;
-        console.log(recipe_id);
         const title = document.querySelector("#recipe_title").innerHTML;
         console.log(title);
         
@@ -76,6 +74,10 @@ btn.onclick = function() {
                 const unit=block_dict["unit"]=block.children[j].innerHTML;
                 block_dict["unit"]=unit;
               }
+              if (block.children[j].id=="aisle"){
+                const aisle=block_dict["aisle"]=block.children[j].innerHTML;
+                block_dict["aisle"]=aisle;
+              }
           }
           ingredients.push(block_dict);
         } 
@@ -86,7 +88,7 @@ btn.onclick = function() {
         
         const notes=document.querySelector("#notes").value;
     
-        const recipe_info={"recipe_id": recipe_id, "title": title, "image": image, "time": time, "servings": servings, "calories": calories, "fat": fat, "protein": protein, "carbs": carbs, "dish_type": dish_type, "ingredients": ingredients, "instructions": instructions, "notes": notes, "meal_date": meal_date, "meal_category": meal_category};
+        const recipe_info={"title": title, "image": image, "time": time, "servings": servings, "calories": calories, "fat": fat, "protein": protein, "carbs": carbs, "dish_type": dish_type, "ingredients": ingredients, "instructions": instructions, "notes": notes, "meal_date": meal_date, "meal_category": meal_category};
     
         fetch('/save_to_meal_plan', {
             method: 'POST',

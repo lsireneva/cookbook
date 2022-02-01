@@ -21,6 +21,7 @@
     <div id="ingredients" class="grid-container">    
         {%for ingredient in ingredients%}
         <grid_item id="item" style="border:solid">
+            <p id="aisle" hidden>{{ingredient.ingredient_aisle}}</p>
             <img id="ingredient_image" src="{{ingredient.ingredient_image}}">
             <div id="amount" class="ingredient-div">{{ingredient.quantity}}</div>&nbsp<div id="unit" class="ingredient-div">{{ingredient.measure}}</div>&nbsp<div id="name" class="ingredient-div">{{ingredient.ingredient_name}}</div> 
         </grid_item>
