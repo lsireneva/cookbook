@@ -32,6 +32,7 @@ def add_new_ingredient(name, image, aisle):
     return True
 
 def add_ingredient_to_recipe(recipe_id, ingredient_id, quantity, measure):
+    print ("CRUD add_ingredient_to_recipe", recipe_id, ingredient_id, quantity, measure)
     ingredient_to_recipe = IngredientToRecipe(recipe_id=recipe_id, ingredient_id=ingredient_id, quantity=quantity, measure=measure)
     add_to_db(ingredient_to_recipe)
     return True
@@ -69,10 +70,17 @@ def check_record_exist(table, name):
         return False
 
 def check_record_in_ingredients_to_recipes(recipe_id, ingredient_id):
-    record=IngredientToRecipe.query.filter(Recipe.recipe_id==recipe_id).filter(Ingredient.ingredient_id==ingredient_id).first()
+    print("CRUD check record in ingr_to_rec")
+    print("recipe_id", recipe_id)
+    print("ingredient_id", ingredient_id)
+    record=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id==recipe_id).filter(IngredientToRecipe.ingredient_id==ingredient_id).first()
+    print ("record", record)
     if record is not None:
+        print ("record is not None")
         return True
-    return False
+    else:
+        print ("record is None")
+        return False
 
 
 def check_in_favorites(recipe_id):
@@ -85,7 +93,6 @@ def get_user_fname(user_id):
     user = User.query.filter(User.user_id==user_id).first()
     if user is not None:
         return user.fname
-    
 
 def get_recipe_id(name):
     recipe = Recipe.query.filter(Recipe.recipe_name==name).first()
