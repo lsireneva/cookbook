@@ -7,15 +7,37 @@
 
 <center> 
 <form>   
-    <ul>
+    <ul id="grocery_list">
     {%for aisle in grocery_list%}
-        <h4>{{aisle}}</h4>
+    <div id="alist">
+        <h4 id="aisle">{{aisle}}</h4>
         {%for item in grocery_list[aisle]%}
-            <li>{{item}}</li> 
+        <li id="item">{{item}}</li> 
         {%endfor%}   
+    </div>
     {%endfor%}
     </ul>
 </form>
 </center>    
-<center><button type="submit" id="grocery_list">Send text message</button></center>
+<center><button type="submit" id="send_email_btn">Send email</button></center>
+
+<!-- The Modal window -->
+<center>
+    <div id="date_category_modal_window" class="modal">
+       <!-- Modal content -->
+       <div class="modal-content">
+           <div class="modal-header">
+               <p>Send grocery list by email:</p>
+               <span class="close">&times;</span>
+           </div>
+           <section class="modal-body">
+               <label for="meal_date">Enter email:</label>
+               <input type="text" id="email" name="email">
+           </section>
+           <center><button type="submit" id="send_email">Send</button></center>
+       </div>
+   </div>
+</center>
+
+<script src="/static/js/grocery_list.js"></script>
 {% endblock %}

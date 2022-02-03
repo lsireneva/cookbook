@@ -10,6 +10,7 @@ import crud
 import calendar
 import datetime
 from datetime import timedelta
+import sendgrid_email_api
 
 
 app = Flask(__name__)
@@ -504,7 +505,17 @@ def get_grocery_list():
 
     print ("____all_ingredients:", all_ingredients)
 
-    return render_template('grocery_list.html', grocery_list=all_ingredients,start_day=monday, end_day=sunday)
+    return render_template('grocery_list.html', grocery_list=all_ingredients, start_day=monday, end_day=sunday)
+
+@app.route('/send_email', methods=['POST'])
+def send_email_by_sendgrid():
+    grocery_list_info = request.get_json().get("grocery_list_info")
+    print ("EMAIL", grocery_list_info['email'])
+
+    sendgrid_email_api.send_email(grocery_list_info['email'], "subject: grocery list", grocery_list_info['grocery_list'])
+    
+
+    return jsonify({"status": "Email sent"})
 
 
 if __name__ == '__main__':
