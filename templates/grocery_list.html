@@ -7,9 +7,9 @@
 
 <center> 
 <form>   
-    <ul id="grocery_list">
+    <ul>
     {%for aisle in grocery_list%}
-    <div id="alist">
+    <div id="grocery_list">
         <h4 id="aisle">{{aisle}}</h4>
         {%for item in grocery_list[aisle]%}
         <li id="item">{{item}}</li> 

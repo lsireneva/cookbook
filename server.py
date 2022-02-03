@@ -510,11 +510,20 @@ def get_grocery_list():
 @app.route('/send_email', methods=['POST'])
 def send_email_by_sendgrid():
     grocery_list_info = request.get_json().get("grocery_list_info")
-    print ("EMAIL", grocery_list_info['email'])
-
-    sendgrid_email_api.send_email(grocery_list_info['email'], "subject: grocery list", grocery_list_info['grocery_list'])
+    grlist = grocery_list_info['grocery_list']
+    html_content = f"<h1>Grocery list:</h1><ol>"
     
-
+    for item in grlist:
+        print(item)
+        print(grlist[item])
+        html_content += f"<h2>{item}</h2><ul>"
+        for i in grlist[item]:
+            print(i)        
+            html_content += f"<li>{i}</li>"
+        html_content +="</ul>"
+    print(html_content)
+    sendgrid_email_api.send_email(grocery_list_info['email'], "subject: grocery list", html_content)
+    
     return jsonify({"status": "Email sent"})
 
 

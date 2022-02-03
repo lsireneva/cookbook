@@ -12,15 +12,27 @@ let span = document.getElementsByClassName("close")[0];
 btn.onclick = function() {
     console.log('send email pressed');
     modal.style.display = "block";
+    let grocery_dict ={};
 
-    const grocery_list = document.querySelector("#grocery_list").textContent; 
-
+    const grocery_list = document.querySelectorAll("#grocery_list"); 
+    
+    for (let i = 0; i < grocery_list.length; i++) {
+        let block=grocery_list[i];
+        let aisle_name=block.children[0].innerText;
+        grocery_dict[aisle_name]=[];
+        for (let j = 1; j < block.children.length; j++){ 
+            console.log(block.children[j].innerText);
+            grocery_dict[aisle_name].push(block.children[j].innerText);
+        }
+    }
+    console.log("dictionary");
+    console.log(grocery_dict);
     const send = document.querySelector("#send_email");
     send.onclick = function() {
         const email=document.querySelector("#email").value;
         modal.style.display = "none";
 
-        const grocery_list_info = {"email": email, "grocery_list": grocery_list};
+        const grocery_list_info = {"email": email, "grocery_list": grocery_dict};
         fetch('/send_email', {
             method: 'POST',
             body: JSON.stringify({grocery_list_info}),
