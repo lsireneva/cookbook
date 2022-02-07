@@ -510,13 +510,14 @@ def get_grocery_list(start_day, end_day):
     if all_ingredients:
         return render_template('grocery_list.html', grocery_list=all_ingredients, start_day=start_day, end_day=end_day)
     else:
+        flash("There is no meal plan for this week")
         return redirect("/show_meal_plan")
 
 @app.route('/send_email', methods=['POST'])
 def send_email_by_sendgrid():
     grocery_list_info = request.get_json().get("grocery_list_info")
     grlist = grocery_list_info['grocery_list']
-    html_content = f"<h1>Grocery list:</h1><ol>"
+    html_content = f"<h1>Grocery list for a week {grocery_list_info['start_day']} - {grocery_list_info['end_day']}:</h1><ol>"
     
     for item in grlist:
         print(item)

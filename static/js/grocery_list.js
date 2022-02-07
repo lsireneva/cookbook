@@ -8,10 +8,15 @@ let btn = document.getElementById("send_email_btn");
 // Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
+//When the user clicks the button, open the modal 
 btn.onclick = function() {
-    console.log('send email pressed');
-    modal.style.display = "block";
+     console.log('send email pressed');
+     modal.style.display = "block";    
+}
+
+function sendEmail(element, start_day, end_day) {
+    console.log("send in modal pressed");
+    //modal.style.display = "block";
     let grocery_dict ={};
 
     const grocery_list = document.querySelectorAll("#grocery_list"); 
@@ -27,24 +32,22 @@ btn.onclick = function() {
     }
     console.log("dictionary");
     console.log(grocery_dict);
-    const send = document.querySelector("#send_email");
-    send.onclick = function() {
-        const email=document.querySelector("#email").value;
-        modal.style.display = "none";
 
-        const grocery_list_info = {"email": email, "grocery_list": grocery_dict};
-        fetch('/send_email', {
-            method: 'POST',
-            body: JSON.stringify({grocery_list_info}),
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(responseJson => {
-          alert(responseJson.status);
-        });
-    }
+    const email=document.querySelector("#email").value;
+    modal.style.display = "none";
+
+    const grocery_list_info = {"email": email, "start_day": start_day, "end_day": end_day, "grocery_list": grocery_dict};
+    fetch('/send_email', {
+        method: 'POST',
+        body: JSON.stringify({grocery_list_info}),
+        headers: {
+        'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+    alert(responseJson.status);
+    });
     
 }
 
