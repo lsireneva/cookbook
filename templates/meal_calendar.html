@@ -6,7 +6,7 @@
 
 <center>
     <a href="/" style="color: transparent"><button type="submit" id="add_recipe" style="display:inline;">Add recipe to Meal Plan</button></a> 
-    <form action="/get_grocery_list" method="POST" style="display:inline;"> 
+    <form action="/get_grocery_list/{{start_day}}/{{end_day}}" method="POST" style="display:inline;"> 
         <button type="submit" id="grocery_list">Get Grocery List</button>
     </form>
 </center><br>

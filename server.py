@@ -490,16 +490,9 @@ def open_recipe_meal_plan(recipe_name):
     
     return redirect(url_for('.get_recipe_details_db', recipe_id = recipe_id))
    
-@app.route('/get_grocery_list', methods=['GET', 'POST'])
-def get_grocery_list():
-    current_time = datetime.date.today()
-    print("CURRENT TIME", current_time)
-    year, week_num, day_of_week = current_time.isocalendar()
-    print("Week #" + str(week_num) + " of year " + str(year))
-    monday = datetime.datetime.strptime(f'{str(year)}-{str(week_num)}-1', "%Y-%W-%w").date()
-    sunday = monday + datetime.timedelta(days=6.9)
-
-    grocery_list = crud.get_all_meal_plan_current_week(session.get("user_id"), monday, sunday)
+@app.route('/get_grocery_list/<start_day>/<end_day>', methods=['GET', 'POST'])
+def get_grocery_list(start_day, end_day):
+    grocery_list = crud.get_all_meal_plan_current_week(session.get("user_id"), start_day, end_day)
     print("GROCERY LIST", grocery_list)
     
     all_ingredients={}
@@ -513,8 +506,11 @@ def get_grocery_list():
             all_ingredients[i.ingredient_aisle].add(i.ingredient_name)
 
     print ("____all_ingredients:", all_ingredients)
-
-    return render_template('grocery_list.html', grocery_list=all_ingredients, start_day=monday, end_day=sunday)
+    
+    if all_ingredients:
+        return render_template('grocery_list.html', grocery_list=all_ingredients, start_day=start_day, end_day=end_day)
+    else:
+        return redirect("/show_meal_plan")
 
 @app.route('/send_email', methods=['POST'])
 def send_email_by_sendgrid():
