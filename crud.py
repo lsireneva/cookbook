@@ -128,6 +128,10 @@ def get_mealplan_recipe_info(recipe_id):
     mealplan_info=MealPlan.query.filter(MealPlan.recipe_id==recipe_id).first()
     return mealplan_info
 
+def get_favorite_recipe_info(recipe_id):
+    favorite_info=Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
+    return favorite_info
+
 def get_recipe_category(recipe_id):
     favorite = Favorite.query.filter(Favorite.recipe_id==recipe_id).first()
     meal_plan = MealPlan.query.filter(MealPlan.recipe_id==recipe_id).first()
@@ -148,7 +152,7 @@ def get_ingredient_amount_measure(recipe_id):
     amount_measure=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id==recipe_id).all()
     return amount_measure
 
-def delete_recipe(recipe_name):
+def delete_recipe_favorite(recipe_name):
     recipe_id = get_recipe_id(recipe_name)
     print("CRUD DELETE RECIPE", recipe_id)
     if get_mealplan_recipe_info(recipe_id) is not None:
@@ -160,6 +164,23 @@ def delete_recipe(recipe_name):
         delete_ingredienttorecipe=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id == recipe_id).all()
         db.session.delete(delete_recipe)
         db.session.delete(delete_favorite)
+    
+        for i in delete_ingredienttorecipe:
+            db.session.delete(i)
+    db.session.commit()
+
+def delete_recipe_meal_plan(recipe_name):
+    recipe_id = get_recipe_id(recipe_name)
+    print("CRUD DELETE RECIPE FROM MEAL PLAN", recipe_id)
+    if get_favorite_recipe_info(recipe_id) is not None:
+        delete_mealplan=MealPlan.query.filter(MealPlan.recipe_id == recipe_id).first()
+        db.session.delete(delete_mealplan)
+    else:
+        delete_mealplan=MealPlan.query.filter(MealPlan.recipe_id == recipe_id).first()
+        delete_recipe = Recipe.query.filter(Recipe.recipe_id == recipe_id).first()
+        delete_ingredienttorecipe=IngredientToRecipe.query.filter(IngredientToRecipe.recipe_id == recipe_id).all()
+        db.session.delete(delete_recipe)
+        db.session.delete(delete_mealplan)
     
         for i in delete_ingredienttorecipe:
             db.session.delete(i)

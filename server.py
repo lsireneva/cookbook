@@ -370,9 +370,17 @@ def open_imported_recipe():
 def delete_recipe_db(): 
     recipe_name = request.get_json().get("recipe_name")
     print("DELETE", recipe_name)  
-    crud.delete_recipe(recipe_name)
+    crud.delete_recipe_favorite(recipe_name)
     
     return jsonify({"status": "Recipe deleted from favorites"})
+
+@app.route('/delete_recipe_from_mealplan', methods=['POST'])
+def delete_recipe_from_mealplan():
+    recipe_name = request.get_json().get("recipe_name")
+    print("DELETE FROM MEAL PLAN", recipe_name)
+    crud.delete_recipe_meal_plan(recipe_name)
+
+    return jsonify({"status": "Recipe deleted from meal plan"})
 
 @app.route('/save_to_meal_plan', methods=['GET', 'POST'])
 def save_to_meal_plan():
@@ -421,7 +429,7 @@ def show_meal_plan():
     
     meal_plan = crud.get_all_meal_plan_current_week(session.get("user_id"), monday, sunday)
     #print("+++++++MEAL_PLAN", meal_plan)
-    
+
     meal_plan_arr=[]
     meal_dict={}
     for meal in meal_plan:
@@ -499,6 +507,7 @@ def get_grocery_list():
         print (item.recipe_name)
         ingredients = crud.get_recipe_ingredients(item.recipe_id)
         for i in ingredients:
+            print("+++++ingredient", i)
             if i.ingredient_aisle not in all_ingredients:
                 all_ingredients[i.ingredient_aisle]=set()
             all_ingredients[i.ingredient_aisle].add(i.ingredient_name)
