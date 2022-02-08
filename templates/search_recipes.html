@@ -1,13 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Cook Book{% endblock %}
+{% block title %}Search Recipes{% endblock %}
 {%block body%}
-    {% if session["user_id"]%}
-      <h1>{{fname}}, welcome to your personal CookBook</h1>
-    {% else %}
-      <h1>Welcome to CookBook</h1>
-    {% endif %}
-    <!-- <h2>What would you like to cook today?</h2>
+
+<h2>What would you like to cook today?</h2>
     
       <section id="search-by-ingredients-container">
         <form action="/recipes" method="GET">
@@ -107,6 +103,6 @@
         <button type="submit" id="submit">Search</button>
         </form>
       </section>
- -->
+
 
 {% endblock %}

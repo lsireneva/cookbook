@@ -3,19 +3,16 @@ h2 {
     padding: 8px;
     margin: 8px;
     text-align: center;
-    
-    /* other styling */
-    /*background-color: #33475b;
-    border-radius: 10px;*/
-    color: #33475b;
-    font-family: Avenir;
+    color: black;
+    font-family: Roboto;
+    font-size: 28px;
   }
 
 h3{
   padding: 20px 20px;
   color: #33475b;
   text-align: center;
-  font-family: Avenir;
+  font-family: Roboto;
 }
 
 h4{
@@ -121,22 +118,19 @@ p{
   background-color:#33475b;
 }
 
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 20px;
+.navbartext{
+  color:black;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10pt 20pt;
+  font-family: Roboto;
   text-decoration: none;
-  font-size: 24px;
 }
-
-.topnav a:hover {
-  background-color: #ddd;
-  color:#33475b;
+a:link:active, a:visited:active {
+  color: #008037;
 }
-.topnavtext {
-  margin-right: 10px;
-  display: inline;
+.navbarborder{
+   border-bottom: 3px solid #008037;
 }
 
 .signup-login-user-form input{
@@ -146,11 +140,6 @@ p{
 .ingredient-div{
   color:#33475b;
   display:inline;
-}
-
-.calendar-div {
-  height: 50%;
-  width: 40%;
 }
 
  /* The Modal (background) */

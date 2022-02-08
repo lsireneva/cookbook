@@ -33,6 +33,9 @@ def homepage():
     else:
         return render_template('homepage.html')
         
+@app.route('/search_recipes')
+def search_recipes_page():
+    return render_template('search_recipes.html')
 
 @app.route('/signup')
 def signup():
