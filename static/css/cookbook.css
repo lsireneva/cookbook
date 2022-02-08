@@ -10,7 +10,7 @@ h2 {
 
 h3{
   padding: 20px 20px;
-  color: #33475b;
+  color: #008037;
   text-align: center;
   font-family: Roboto;
 }
@@ -20,15 +20,15 @@ h4{
   padding-bottom: 10px;
   text-align: left;    
   color: white;
-  font-family: Avenir;
+  font-family: Roboto;
 }
 
 button{
   padding: 8px;
   margin: 8px;
-  background-color: #33475b;
+  background-color: #BB3E03;
   color: white;
-  font-family: Avenir;
+  font-family: Roboto;
   width: fit-content;
 }
 
@@ -36,9 +36,9 @@ section, ul, ol{
   padding: 50px;  
   margin: 25px;
   border-radius: 10px;
-  color: white;
-  font-family: Avenir;
-  background-color: #33475b;
+  color: black;
+  border: 1px solid #BB3E03;
+  font-family: Roboto;
   width: fit-content;
   text-align: left;
 }
@@ -48,7 +48,7 @@ p{
   margin: 10px;
   border-radius: 10px;
   color: white;
-  font-family: Avenir;
+  font-family: Roboto;
   background-color: #33475b;
   width: fit-content;
   font-size: 18px;
@@ -59,7 +59,7 @@ p{
   margin: 5px;
   border-radius: 10px;
   color:white;
-  font-family: Avenir;
+  font-family: Roboto;
   background-color: #33475b;
   font-size: 16px;
 
@@ -67,7 +67,7 @@ p{
 
 .recipe-label{
   color: #33475b;
-  font-family: Avenir;
+  font-family: Roboto;
   width: fit-content;
   font-size: 18px;
 
@@ -191,3 +191,68 @@ th, td {
   color: #33475b;
 }
 
+.homepage-div{
+  height: 100%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  accordion-color: black;
+  accordion-button-active-bg:  green;
+}
+
+input{
+  color:#BB3E03
+}
+
+.banner {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  /* filter: grayscale(10%); */
+}
+
+.div-image-text {
+  position: relative;
+}
+
+.first-txt {
+  position: absolute;
+  top: 40pt;
+  left:450pt;
+  color:#2C046D;
+  outline-color: white;
+  outline-width: 4pt;
+  font-family: Roboto;
+  font-size: 32pt;
+}
+.accordion-text{
+  font-family: Roboto;
+  font-size: 20pt;
+  accordion-button-active-bg: green; 
+
+}
+
+.accordion-button:link, .accordion-button:visited, .accordion-button:hover, .accordion-button:active  {
+  background-color: #008037 !important;
+  color:#FFF !important;
+  text-decoration: none !important;
+  border: hidden !important;
+  border-color: #FFF !important;
+  box-shadow: 0px !important;      
+}
+
+.accordion-button:focus {
+  z-index: 3;
+  border-color: #FFF !important;
+  outline: 0;
+  box-shadow: 0 0 0 .25rem #FFF !important;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #FFF  !important;
+  background-color: #008037 !important;
+}
+
+.checkbox-search{
+  display: inline-block;
+}

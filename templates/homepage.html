@@ -2,23 +2,46 @@
 
 {% block title %}Cook Book{% endblock %}
 {%block body%}
-    {% if session["user_id"]%}
-      <h1>{{fname}}, welcome to your personal CookBook</h1>
-    {% else %}
-      <h1>Welcome to CookBook</h1>
-    {% endif %}
-    <!-- <h2>What would you like to cook today?</h2>
-    
-      <section id="search-by-ingredients-container">
-        <form action="/recipes" method="GET">
-          <label for="search_ingredients">Search by ingredients:</label>
-          <input type="text" id ="search_ingredients" placeholder="Apple, flour, sugar" name="ingredients" method="POST">
-          <button type="submit" id="submit">Submit</button>
-        </form>
-      </section>
-      
+    <div class="div-image-text">
+      <img src="/static/images/banner.jpg" class="banner" alt="CookBook">
+      {% if session["user_id"]%}
+        <h1 class="first-txt">{{fname}}, welcome to your personal CookBook</h1>
+      {% else %}
+        <h1 class="first-txt">Welcome to CookBook</h1>
+      {% endif %}
+    </div>
+    <h3>What would you like to cook today?</h3><br><br>
+    <div class="accordion accordion-flush homepage-div" id="accordionFlushExample" >
+      <div class="accordion-item ">
+        <h2 class="accordion-header" id="flush-headingOne">
+          <button class="accordion-button collapsed accordion-text" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Search by ingredients
+          </button>
+        </h2>
+        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <center>
+            <section id="search-by-ingredients-container">
+              <form action="/recipes" method="GET">
+                <label for="search_ingredients">Enter ingredients:</label>
+                <input type="text" id ="search_ingredients" placeholder="apple, flour, sugar" name="ingredients" method="POST">
+                <button type="submit" id="submit">Search</button>
+              </form>
+            </section>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingTwo">
+          <button class="accordion-button collapsed accordion-text" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Complex search
+          </button>
+        </h2>
+        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+
       <section id="advanced-search-container">
-        <h3>Advanced search of recipe:</h3><br>
         <form action="/recipes_advanced" method="GET">
             <label for="dish">Dish:</label>
             <input type="text" id ="dish" placeholder="pasta" name="query" method="POST"><br><br>
@@ -78,35 +101,94 @@
         
         <div>
         <label>Food Intolerances:</label><br>
+        <div class="checkbox-search">
           <input type="checkbox" id="dairy" name="intolerances" value="dairy">
           <label for="dairy"> Dairy</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="egg" name="intolerances" value="egg">
           <label for="egg">Egg</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="gluten" name="intolerances" value="gluten">
           <label for="gluten">Gluten</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="grain" name="intolerances" value="grain">
           <label for="grain">Grain</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="peanut" name="intolerances" value="peanut">
           <label for="peanut">Peanut</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="wheat" name="intolerances" value="wheat">
           <label for="wheat">Wheat</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="seafood" name="intolerances" value="seafood">
           <label for="seafood">Seafood</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="sesame" name="intolerances" value="sesame">
           <label for="sesame">Sesame</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="shellfish" name="intolerances" value="shellfish">
           <label for="shellfish">Shellfish</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="soy" name="intolerances" value="soy">
           <label for="soy">Soy</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="sulfite" name="intolerances" value="sulfite">
           <label for="sulfite">Sulfite</label><br>
+        </div>
+        <div class="checkbox-search">
           <input type="checkbox" id="treenut" name="intolerances" value="treenut">
           <label for="treenut">Tree Nut</label><br>
+        </div>
         </div> <br>
         
-        <button type="submit" id="submit">Search</button>
+        <center><button type="submit" id="submit">Search</button></center>
         </form>
       </section>
- -->
+          </div>
+        </div>
+      </div>
+      {% if session["user_id"]%}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingThree">
+          <button class="accordion-button collapsed accordion-text" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            Import recipe
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <center>
+            <section>
+            <form action="/imported_recipe" method="POST">
+                <label for="recipe_link">Enter recipe link:</label>
+                <input type="text" id ="recipe_link" name="recipe_link">
+                <button type="submit" id="submit">Import</button>
+            </form>
+            </section>
+            </center>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    </div><br><br>
+<!-- Footer -->
+<footer class="page-footer font-small unique-color-dark pt-4">
 
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">
+    <a href="https://www.linkedin.com/in/liubov-sireneva-13942139/" style="color:black">© Liubov Sireneva</a>
+  </div>
+  <!-- Copyright -->
+
+  </footer>
+<!-- Footer -->
 {% endblock %}
