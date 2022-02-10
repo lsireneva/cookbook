@@ -1,5 +1,6 @@
 h1,
-h2 {
+h2,
+h5 {
     padding: 8px;
     margin: 8px;
     text-align: center;
@@ -19,14 +20,14 @@ h4{
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: left;    
-  color: white;
+  color: #008037;
   font-family: Roboto;
 }
 
 button{
   padding: 8px;
   margin: 8px;
-  background-color: #BB3E03;
+  background-color: #008037;
   color: white;
   font-family: Roboto;
   width: fit-content;
@@ -37,7 +38,7 @@ section, ul, ol{
   margin: 25px;
   border-radius: 10px;
   color: black;
-  border: 1px solid #BB3E03;
+  border: 1px solid #008037;
   font-family: Roboto;
   width: fit-content;
   text-align: left;
@@ -47,9 +48,8 @@ p{
   padding: 10px;  
   margin: 10px;
   border-radius: 10px;
-  color: white;
+  color: #008037;
   font-family: Roboto;
-  background-color: #33475b;
   width: fit-content;
   font-size: 18px;
 }
@@ -60,7 +60,7 @@ p{
   border-radius: 10px;
   color:white;
   font-family: Roboto;
-  background-color: #33475b;
+  background-color: #008037;
   font-size: 16px;
 
 }
@@ -110,13 +110,14 @@ p{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 40%;
+  height: 40%;
 }
 
-.topnav {
+/* .topnav {
   overflow: hidden;
   background-color:#33475b;
-}
+} */
 
 .navbartext{
   color:black;
@@ -185,10 +186,10 @@ a:link:active, a:visited:active {
 
 th, td {
   text-align: center;
-  border: 1px solid #33475b;
+  border: 2pt solid #008037;
   font-size: 18px;
   font-weight: bold;
-  color: #33475b;
+  color: black;
 }
 
 .homepage-div{
@@ -196,12 +197,10 @@ th, td {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
-  accordion-color: black;
-  accordion-button-active-bg:  green;
 }
 
 input{
-  color:#BB3E03
+  color:#008037
 }
 
 .banner {
@@ -217,11 +216,11 @@ input{
 
 .first-txt {
   position: absolute;
-  top: 40pt;
+  top: 20pt;
   left:450pt;
-  color:#2C046D;
-  outline-color: white;
-  outline-width: 4pt;
+  /* color:#2C046D; */
+  color:white;
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
   font-family: Roboto;
   font-size: 32pt;
 }
@@ -255,4 +254,19 @@ input{
 
 .checkbox-search{
   display: inline-block;
+}
+.card{
+  margin-top: 20pt;
+  margin-bottom: 20pt;
+  margin-left: 20pt;
+  margin-right: 20pt;
+}
+.toast{
+  color:#008037;
+  text-align: center;
+  background-color: white;
+  margin-left: 50pt;
+  position: absolute; 
+  top: 150pt; 
+  left: 100pt ;
 }

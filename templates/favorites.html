@@ -5,19 +5,19 @@
 <h1>Favorite recipes:</h1>
 
  <!-- Display list of found recipes (titles and pictures) -->
-
- <div class="grid-container">
+<div class="row row-cols-1 row-cols-md-3 g-4">
     {% for fav in favorites%}
-    <grid_item>
-    <figure class= "recipy_item">
-        <h2>{{fav.recipe_name}}</h2><br>
-        <a href="/recipe_details_db/{{fav.recipe_id}}">
-            <img src="{{fav.recipe_image}}" class="recipe_img">
+    <div class="col">  
+      <div class="shadow bg-white rounded card">
+        <a href="/recipe_details_db/{{fav.recipe_id}}">  
+        <img src="{{fav.recipe_image}}" class="card-img-top" height="400pt">
         </a>
-        <h3>Time:{{fav.time}}</h3>
-    </figure>
-  </grid_item>
+        <div class="card-body">
+          <h5 class="card-title">{{fav.recipe_name}}</h5>
+          <p class="card-text">Time:{{fav.time}}</p>
+        </div>
+      </div>
+    </div>
     {%endfor%}
 </div>
-
 {% endblock %}

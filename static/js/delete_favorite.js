@@ -14,7 +14,11 @@ document.querySelector("#del_favorites").addEventListener("click", evt => {
       })
         .then(response => response.json())
         .then(responseJson => {
-          alert(responseJson.status);
+          let myAlert = document.getElementById('recipeToast');
+          let toastMessage = document.getElementById('toast_message');
+          toastMessage.innerText="Deleted from favorites";
+          let myToast = bootstrap.Toast.getOrCreateInstance(myAlert);
+          myToast.show();         
         });
 
 

@@ -6,16 +6,18 @@
 
 <!-- Display list of found recipes (titles and pictures) -->
 
-<div class="grid-container">
+<div class="row row-cols-1 row-cols-md-3 g-4">
   {% for recipe in recipes%}
-  <grid_item>
-  <figure class= "recipy_item">
-    <h2>{{recipe['title']}}</h2><br>
-      <a href="/recipe_details/{{recipe['id']}}">
-        <img src="{{recipe['image']}}" class="recipe_img">
+  <div class="col">  
+    <div class="shadow bg-white rounded card">
+      <a href="/recipe_details/{{recipe['id']}}">  
+      <img src="{{recipe['image']}}" class="card-img-top" height="400pt">
       </a>
-  </figure>
-</grid_item>
+      <div class="card-body">
+        <h5 class="card-title">{{recipe['title']}}</h5>
+      </div>
+    </div>
+  </div>
   {%endfor%}
 </div>
 {% endblock %}
