@@ -11,7 +11,7 @@ h5 {
 
 h3{
   padding: 20px 20px;
-  color: #008037;
+  color: #007F5F;
   text-align: center;
   font-family: Roboto;
 }
@@ -20,17 +20,19 @@ h4{
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: left;    
-  color: #008037;
+  color: #007F5F;
   font-family: Roboto;
 }
 
 button{
   padding: 8px;
   margin: 8px;
-  background-color: #008037;
+  background-color: #007F5F;
   color: white;
   font-family: Roboto;
   width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 section, ul, ol{
@@ -38,7 +40,7 @@ section, ul, ol{
   margin: 25px;
   border-radius: 10px;
   color: black;
-  border: 1px solid #008037;
+  border: 1px solid #007F5F;
   font-family: Roboto;
   width: fit-content;
   text-align: left;
@@ -48,7 +50,7 @@ p{
   padding: 10px;  
   margin: 10px;
   border-radius: 10px;
-  color: #008037;
+  color: #007F5F;
   font-family: Roboto;
   width: fit-content;
   font-size: 18px;
@@ -60,7 +62,7 @@ p{
   border-radius: 10px;
   color:white;
   font-family: Roboto;
-  background-color: #008037;
+  background-color: #007F5F;
   font-size: 16px;
 
 }
@@ -114,11 +116,6 @@ p{
   height: 40%;
 }
 
-/* .topnav {
-  overflow: hidden;
-  background-color:#33475b;
-} */
-
 .navbartext{
   color:black;
   font-size: 20px;
@@ -128,10 +125,10 @@ p{
   text-decoration: none;
 }
 a:link:active, a:visited:active {
-  color: #008037;
+  color: #007F5F;
 }
 .navbarborder{
-   border-bottom: 3px solid #008037;
+   border-bottom: 3px solid #007F5F;
 }
 
 .signup-login-user-form input{
@@ -146,19 +143,19 @@ a:link:active, a:visited:active {
  /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
-  position: fixed;
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
-  left: 750px;
-  top: 250px;
-  width: fit-content; /* Full width */
-  height: fit-content; /* Full height */
+  position: absolute;
+  top: 30%;
+  bottom:50%;
+  width: 100%;
+  /* width: fit-content; Full width */
+  height: 100%; /* Full height */
 }
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
-  border: 1px solid #888;
+  background-color: white;
   width: auto; /* Could be more or less, depending on screen size */
 }
 
@@ -177,16 +174,26 @@ a:link:active, a:visited:active {
   cursor: pointer;
 } 
 .modal-header {
-  padding: 2px 16px;
-  background-color: #33475b;
-  color: white;
+  /* padding: 2px 16px; */
+  background-color: white;
+  color: #007F5F;
+}
+.select{
+  background-color: white;
+  color: #007F5F;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal-body {
+  padding-top: 10pt; 
+  padding-bottom: 10pt;
+  margin-left: auto;
+  margin-right: auto;
+  float: left;
+}
 
 th, td {
   text-align: center;
-  border: 2pt solid #008037;
+  border: 2pt solid #007F5F;
   font-size: 18px;
   font-weight: bold;
   color: black;
@@ -200,7 +207,7 @@ th, td {
 }
 
 input{
-  color:#008037
+  color:#007F5F
 }
 
 .banner {
@@ -232,7 +239,7 @@ input{
 }
 
 .accordion-button:link, .accordion-button:visited, .accordion-button:hover, .accordion-button:active  {
-  background-color: #008037 !important;
+  background-color: #007F5F !important;
   color:#FFF !important;
   text-decoration: none !important;
   border: hidden !important;
@@ -249,7 +256,7 @@ input{
 
 .accordion-button:not(.collapsed) {
   color: #FFF  !important;
-  background-color: #008037 !important;
+  background-color: #007F5F !important;
 }
 
 .checkbox-search{
@@ -260,9 +267,14 @@ input{
   margin-bottom: 20pt;
   margin-left: 20pt;
   margin-right: 20pt;
+  position:relative;
+}
+.row{
+  margin-left: 100pt;
+  margin-right: 100pt;
 }
 .toast{
-  color:#008037;
+  color:#007F5F;
   text-align: center;
   background-color: white;
   margin-left: 50pt;
@@ -270,3 +282,10 @@ input{
   top: 150pt; 
   left: 100pt ;
 }
+.card-text{
+  position:absolute;                 
+  bottom:0;                         
+  left:0;  
+}
+
+

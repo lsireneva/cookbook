@@ -1,12 +1,12 @@
 "use strict";
 // Get the modal window
-let modal = document.getElementById("date_category_modal_window");
+let modal = document.getElementById("mpModal");
 
 // Get the button that opens the modal
 let btn = document.getElementById("add_meal_plan");
 
-// Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
+// // Get the <span> element that closes the modal
+let closebtn = document.getElementById("model-close");
 
 // When the user clicks the button, open the modal 
 btn.onclick = function() {
@@ -109,8 +109,8 @@ btn.onclick = function() {
     }
 }
 
-// when the user clicks on x, close the modal
-span.onclick = function() {
+// // when the user clicks on x, close the modal
+closebtn.onclick = function() {
   modal.style.display = "none";
 }
 

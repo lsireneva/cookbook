@@ -4,18 +4,18 @@
 
 <h1>Recipes:</h1>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row row-cols-1 row-cols-md-4 g-4">
   {%for recipe in recipes['results']%}
   <div class="col">  
-    <div class="shadow bg-white rounded card">
-      <a href="/recipe_details/{{recipe['id']}}">  
-      <img src="{{recipe['image']}}" class="card-img-top" height="400pt">
-      </a>
+    <a href="/recipe_details/{{recipe['id']}}">
+    <div class="shadow bg-white rounded card h-100">
+      <img src="{{recipe['image']}}" class="card-img-top" height="250pt">
       <div class="card-body">
         <h5 class="card-title">{{recipe['title']}}</h5>
-        <p class="card-text">Time:{{ recipe['readyInMinutes']}} min  Likes:{{ recipe['aggregateLikes']}}</p>
+        <p class="card-text">Time: {{ recipe['readyInMinutes']}} min  Likes:{{ recipe['aggregateLikes']}}</p>
       </div>
     </div>
+    </a>
   </div>
   {%endfor%}
 </div>

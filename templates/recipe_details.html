@@ -25,10 +25,38 @@
         </div>
     </div>    
      <!-- The Modal window -->
-     <center>
-     <div id="date_category_modal_window" class="modal">
+    
+    <div class="modal" id="mpModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose date and category</h5>
+                <button type="button" id="model-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-body">
+                    <label for="meal_date">Date:</label>
+                    <input type="date" id="meal_date" name="meal_date"><br><br>
+                
+                    <label>Choose a category:</label>
+                    <select class="select" name="meal_category" id="meal_category">
+                        <option value="none" selected disabled hidden>Select an Option</option>
+                        <option value="breakfast">breakfast</option>
+                        <option value="lunch">lunch</option>
+                        <option value="dinner">dinner</option>
+                    </select>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="button" id="add_date_category">Add</button>
+            </div>
+            </div>
+        </div>
+    </div>
+          
+     <!-- <div id="date_category_modal_window" class="modal"> -->
         <!-- Modal content -->
-        <div class="modal-content">
+        <!-- <div class="modal-content">
             <div class="modal-header">
                 <p>Choose date and category</p>
                 <span class="close">&times;</span>
@@ -48,8 +76,8 @@
             </section>
             <center><button type="submit" id="add_date_category">Add</button></center>
         </div>
-    </div>
-    </center>
+    </div> -->
+    
     <center>
         <label class="recipe-label" for="time">Time:</label><h2 id="time" style="display:inline;">{{recipe['readyInMinutes']}}min</h2>
         <label class="recipe-label" for="servings">Servings:</label><h2 id="servings" style="display:inline;">{{recipe['servings']}}</h2> 
