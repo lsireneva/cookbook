@@ -26,7 +26,7 @@
     </div>    
      <!-- The Modal window -->
     
-    <div class="modal" id="mpModal" tabindex="-1">
+    <div class="modal mp-modal" id="mpModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -53,30 +53,6 @@
             </div>
         </div>
     </div>
-          
-     <!-- <div id="date_category_modal_window" class="modal"> -->
-        <!-- Modal content -->
-        <!-- <div class="modal-content">
-            <div class="modal-header">
-                <p>Choose date and category</p>
-                <span class="close">&times;</span>
-            </div>
-            <section class="modal-body">
-                <label for="meal_date">Date:</label>
-                <input type="date" id="meal_date" name="meal_date">
-            </section>
-            <section class="modal-body">
-                <label>Choose a category:</label>
-                <select name="meal_category" id="meal_category">
-                    <option value="none" selected disabled hidden>Select an Option</option>
-                    <option value="breakfast">breakfast</option>
-                    <option value="lunch">lunch</option>
-                    <option value="dinner">dinner</option>
-                </select>
-            </section>
-            <center><button type="submit" id="add_date_category">Add</button></center>
-        </div>
-    </div> -->
     
     <center>
         <label class="recipe-label" for="time">Time:</label><h2 id="time" style="display:inline;">{{recipe['readyInMinutes']}}min</h2>
@@ -106,7 +82,7 @@
     
     <h2>Instructions:</h2>
     
-    <ol id="instructions">
+    <ol class="app-ol" id="instructions">
         {%for step in instructions_list%}
         <li>{{step}}</li>
         {%endfor%}

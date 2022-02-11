@@ -3,16 +3,21 @@
 {% block body %}
 <h1>Login in to CookBook:</h1>
 <center>
-<section>
+<section class="app-section">
     <form class="signup-login-user-form" action="/check_login" method="POST">
-        <a href="/signup" style="color:black">Don't have an account? Sign up free!</a><br><br>
-        <label for="email">Email:</label>
-        <input id= "email" type="text" name="email" placeholder="Enter your email address"><br><br>
+        <center>
+            <figure><img width="300px" height="300px" class="img-fluid rounded-circle" src="/static/images/login.jpg"></figure>
+            <a href="/signup" class="signup-image-link" style="color:black">Don't have an account? Sign Up</a><br><br>
+            
+            <label for="email">Email:</label>
+            <input id= "email" type="text" name="email" placeholder="Enter your email address"><br><br>
 
-        <label for="password">Password:</label>
-        <input id="password" type="password" name="password" placeholder="Enter password"><br><br>
-        <button type="click" id="login-button">Login</button>
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" placeholder="Enter password"><br><br>
+            <button type="click" id="login-button">Login</button>
+        </center>
     </form>
 </section>
+
 </center>
 {% endblock %}

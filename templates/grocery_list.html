@@ -7,7 +7,7 @@
 
 <center> 
 <form>   
-    <ul>
+    <ul class="app-ol">
     {%for aisle in grocery_list%}
     <div id="grocery_list">
         <h4 id="aisle">{{aisle}}</h4>
@@ -19,24 +19,38 @@
     </ul>
 </form>
 </center>    
-<center><button type="submit" id="send_email_btn">Send email</button></center>
-
+<center><button type="submit" id="send_email_btn" position: relative;>Send email</button></center>
+<!--Toast-->
+<div class="toast align-items-center border-0 gl-toast" id="glToast" role="status" aria-live="polite" aria-atomic="true">
+    <div class="d-flex">
+    <div class="toast-body">
+        <p id="toast_message"></p>
+    </div>
+    <button type="button" class="btn-close btn-close-black me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+</div>    
 <!-- The Modal window -->
 <center>
-    <div id="date_category_modal_window" class="modal">
-       <!-- Modal content -->
-       <div class="modal-content">
-           <div class="modal-header">
-               <p>Send grocery list by email:</p>
-               <span class="close">&times;</span>
-           </div>
-           <section class="modal-body">
-               <label for="meal_date">Enter email:</label>
-               <input type="text" id="email" name="email">
-           </section>
-           <center><button type="button" id="send_email" onclick="sendEmail(this, '{{start_day}}', '{{end_day}}')">Send</button></center>
-       </div>
-   </div>
+    
+<div class="modal gl-modal" id="glModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Send grocery list by email:</h5>
+                <button type="button" id="model-close" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-body">
+                    <label for="meal_date">Enter email:</label>
+                <input type="text" id="email" name="email">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <center><button type="button" id="send_email" onclick="sendEmail(this, '{{start_day}}', '{{end_day}}')">Send</button></center>
+            </div>
+        </div>
+    </div>
+</div>
 </center>
 
 <script src="/static/js/grocery_list.js"></script>

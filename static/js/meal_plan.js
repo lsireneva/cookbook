@@ -5,7 +5,7 @@ let modal = document.getElementById("mpModal");
 // Get the button that opens the modal
 let btn = document.getElementById("add_meal_plan");
 
-// // Get the <span> element that closes the modal
+//Get the element that closes the modal
 let closebtn = document.getElementById("model-close");
 
 // When the user clicks the button, open the modal 

@@ -1,12 +1,12 @@
 "use strict";
 // Get the modal window
-let modal = document.getElementById("date_category_modal_window");
+let modal = document.getElementById("glModal");
 
 // Get the button that opens the modal
 let btn = document.getElementById("send_email_btn");
 
-// Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
+// Get the element that closes the modal
+let closebtn = document.getElementById("model-close");
 
 //When the user clicks the button, open the modal 
 btn.onclick = function() {
@@ -46,13 +46,17 @@ function sendEmail(element, start_day, end_day) {
     })
     .then(response => response.json())
     .then(responseJson => {
-    alert(responseJson.status);
+        let myAlert = document.getElementById('glToast');
+        let toastMessage = document.getElementById('toast_message');
+        toastMessage.innerText=responseJson.status;
+        let myToast = bootstrap.Toast.getOrCreateInstance(myAlert);
+        myToast.show();      
     });
     
 }
 
 // when the user clicks on x, close the modal
-span.onclick = function() {
+closebtn.onclick = function() {
     modal.style.display = "none";
   }
   

@@ -3,21 +3,24 @@
 {% block body %}
 <h1>Create an Account on CookBook:</h1>
 <center>
-<section>
+<section class="app-section">
     <form class="signup-login-user-form" action="/create_user" method="POST">
-        <a href="/login" style="color:black">Already have and account?</a><br><br>
-        <label for="fname">First name:</label> 
-        <input id= "fname" type="text" name="fname" placeholder="Enter your first name"><br><br> 
+        <center>
+            <figure><img width="300px" height="300px" class="img-fluid rounded-circle" src="/static/images/signup.jpg"></figure>
+            <a href="/login" style="color:black">Already have and account?</a><br><br>
+            <label for="fname">First name:</label> 
+            <input id= "fname" type="text" name="fname" placeholder="Enter your first name"><br><br> 
 
-        <label for="lname">Last name:</label> 
-        <input id= "lname" type="text" name="lname" placeholder="Enter your last name"><br><br>
+            <label for="lname">Last name:</label> 
+            <input id= "lname" type="text" name="lname" placeholder="Enter your last name"><br><br>
 
-        <label for="email">Email:</label>
-        <input id= "email" type="text" name="email" placeholder="Enter your email address"><br><br>
+            <label for="email">Email:</label>
+            <input id= "email" type="text" name="email" placeholder="Enter your email address"><br><br>
 
-        <label for="password">Password:</label>
-        <input id="password" type="password" name="password" placeholder="Create password"><br><br>
-        <button type="submit" id="submit">Create Account</button>
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" placeholder="Create password"><br><br>
+            <button type="submit" id="submit">Create Account</button>
+        </center>
     </form>
 </section>
 </center>

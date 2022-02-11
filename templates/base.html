@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
+    <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet"> 
@@ -29,12 +31,39 @@
         <div class="navbar-nav">
           {% if session["user_id"] %}
             <a href="/" class="nav-item navbartext" id="navbartext">HOME</a>
-            <a href="/search_recipes" class="nav-item navbartext">RECIPES</a>
+            <!-- <a href="/search_recipes" class="nav-item navbartext">RECIPES</a> -->
+            <div class="collapse navbar-collapse">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active navbartext" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    RECIPES
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-white">
+                    <li><a class="dropdown-item" href="/meals/breakfast">Breakfast</a></li>
+                    <li><a class="dropdown-item" href="/meals/lunch">Lunch</a></li>
+                    <li><a class="dropdown-item" href="/meals/dinner">Dinner</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
             <a href="/favorites" class="nav-item navbartext">FAVORITES</a>
             <a href="/show_meal_plan" class="nav-item navbartext">MEAL PLAN</a>
           {% else %}
             <a href="/" class="nav-item nav-link active navbartext">HOME</a>
-            <a href="/search_recipes" class="nav-item navbartext">RECIPES</a>
+            <div class="collapse navbar-collapse">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle active navbartext" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    RECIPES
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-white">
+                    <li><a class="dropdown-item" href="/meals/breakfast">Breakfast</a></li>
+                    <li><a class="dropdown-item" href="/meals/lunch">Lunch</a></li>
+                    <li><a class="dropdown-item" href="/meals/dinner">Dinner</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           {% endif %} 
         </div>
         <div class="navbar-nav ms-auto">

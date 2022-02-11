@@ -173,6 +173,29 @@ def get_recipes_advanced():
 
     return render_template('recipes_advanced.html', recipes=recipes)
 
+@app.route('/meals/<type>', methods=['GET', 'POST'])
+def get_recipes_breakfast(type):
+    print("TYPES", type)
+    url = 'https://api.spoonacular.com/recipes/random'
+    payload = { 'number': 10,
+                'tags': type,
+                'apiKey': API_KEY}
+
+    response = requests.get(url, params=payload)
+    print ("response:", response)
+
+    if response.status_code != 200:
+                response.raise_for_status()
+    
+    meals = response.json()
+    #print(breakfast_recipes)
+    for recipe in meals['recipes']:
+        print("recipe", recipe)
+        #print("BREAKFAST TITLE", recipe[title])
+        #print(recipe[readyInMinutes])
+    
+    return render_template('meals.html', recipes=meals, type=type)
+
 
 @app.route('/recipe_details/<recipe_id>')
 def get_recipe_details(recipe_id):

@@ -21,7 +21,7 @@
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
             <center>
-            <section id="search-by-ingredients-container">
+            <section class="app-section" id="search-by-ingredients-container">
               <form action="/recipes" method="GET">
                 <label for="search_ingredients">Enter ingredients:</label>
                 <input type="text" id ="search_ingredients" placeholder="apple, flour, sugar" name="ingredients" method="POST">
@@ -41,7 +41,7 @@
         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
 
-      <section id="advanced-search-container">
+      <section class="app-section" id="advanced-search-container">
         <form action="/recipes_advanced" method="GET">
             <label for="dish">Dish:</label>
             <input type="text" id ="dish" placeholder="pasta" name="query" method="POST"><br><br>
@@ -167,7 +167,7 @@
         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
             <center>
-            <section>
+            <section class="app-section">
             <form action="/imported_recipe" method="POST">
                 <label for="recipe_link">Enter recipe link:</label>
                 <input type="text" id ="recipe_link" name="recipe_link">

@@ -11,7 +11,7 @@
     </form>
 </center><br>
 <center>
-    <section>
+    <section class="app-section">
         <form action="/open_meal_plan" method="POST"> 
             <label for="start_date"> Start Date:</label>
             <input type="date" id="start_date" name="monday">
@@ -42,9 +42,10 @@
                         <th>{%for i in day[key]['breakfast']%}
                             <div>
                                 <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
-                                    <p class="p-meal-plan">{{i.recipe_name}}</p>
+                                    <p class="p-meal-plan" style="display:inline;">{{i.recipe_name}}</p>
                                 </a>
-                                <button class="btn" onclick="deleteRecipe(this, '{{i.recipe_name}}')">Delete</button>
+                                <button class="btn btn-xs" type="button" style="display:inline;" data-toggle="tooltip" data-placement="top"
+                                title="Delete" onclick="deleteRecipe(this, '{{i.recipe_name}}')"><i class="bi bi-trash"></i></button>
                             </div>
                         {%endfor%}
                         </th>
@@ -59,9 +60,10 @@
                         <th>{%for i in day[key]['lunch']%}
                             <div>
                                 <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
-                                    <p class="p-meal-plan">{{i.recipe_name}}</p> 
+                                    <p class="p-meal-plan" style="display:inline;">{{i.recipe_name}}</p> 
                                 </a>
-                                <button class="btn" onclick="deleteRecipe(this, '{{i.recipe_name}}')">Delete</button>
+                                <button class="btn btn-xs" type="button" style="display:inline;" data-toggle="tooltip" data-placement="top"
+                                title="Delete" onclick="deleteRecipe(this, '{{i.recipe_name}}')"><i class="bi bi-trash"></i></button>
                             </div>
                         {%endfor%}
                         </th>
@@ -76,9 +78,10 @@
                         <th>{%for i in day[key]['dinner']%}
                             <div>
                                 <a href="/open_recipe_meal_plan/{{i.recipe_name}}" style="color: transparent">
-                                    <p class="p-meal-plan">{{i.recipe_name}}</p>
+                                    <p class="p-meal-plan" style="display:inline;">{{i.recipe_name}}</p>
                                 </a>
-                                <button class="btn" onclick="deleteRecipe(this, '{{i.recipe_name}}')">Delete</button>
+                                <button class="btn btn-xs" type="button" style="display:inline;" data-toggle="tooltip" data-placement="top"
+                                title="Delete" onclick="deleteRecipe(this, '{{i.recipe_name}}')"><i class="bi bi-trash"></i></button>
                             </div>
                         {%endfor%}
                         </th>
